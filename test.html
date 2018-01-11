@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <title>Test IP</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  #map {
+    height: inherit;
+  }
+
+  #search {
+    display: none;
+  }
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+  <h3>IP Test</h3>
+  <p id="error-msg"></p>
+  <form action="#">
+    <div class="row">
+      <div class="col-md-12">
+        <label for="address">Address</label>
+        <input id="address" type="text" value=""  />
+        <button type="button" id="submit" >Locate!</button>
+        <p id="error-msg"></p>
+      </div>
+    </div>
+  </form>
+  <div id="map">[map]</div>
+
+    <!-- The Modal -->
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>It looks like you're in <span id="area"></span></p>
+      <p>Would you like to continue or enter a different address?</p>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="modal-btn-yes">Yes</button>
+        <button type="button" class="btn btn-primary" id="modal-btn-no">New Address</button>
+      </div>
+    </div>
+
+  </div>
+  
+
+  <script>
+
+$(document).ready(function() {
+
+  var modal = $("#myModal");
+
+  // initialize the map with the users coordinates
+  function initMap() {
+    var location = { lat: Number(userLoc[0]), lng: Number(userLoc[1]) };
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: location
+    });
+
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(location),
+      map: map
+    });
+    var geocoder = new google.maps.Geocoder();
+
+    // Listen for the submit button
+    document.getElementById('submit').addEventListener('click', function() {
+      event.preventDefault();
+      // call geocode function from search bar
+      geocodeAddress(geocoder, map);
+    }); 
+  }
+
+  function geocodeAddress(geocoder, resultsMap) {
+    var address = document.getElementById('address').value;
+    geocoder.geocode({'address': address}, function(results, status) {
+      if (status === google.maps.GeocoderStatus.OK) {
+        resultsMap.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: resultsMap,
+          position: results[0].geometry.location
+        });
+      } else {
+        var error = document.getElementById('error-msg');
+        var errorText = 'Address lookup was not successful for the following reason: ' + status;
+        error.insertAdjacentHTML( 'afterBegin', errorText );
+      }
+    });
+  }
+
+  var modalConfirm = function(callback){
+  
+      modal.css({
+        display: 'block'
+      });
+
+    $("#modal-btn-yes").on("click", function(){
+      callback(true);
+      modal.css({
+        display: 'none'
+      });
+    });
+    
+    $("#modal-btn-no").on("click", function(){
+      callback(false);
+      modal.css({
+        display: 'none'
+      });
+    });
+  };
+
+  modalConfirm(function(confirm){
+    if (confirm) {
+      // call the google API
+      initMap();
+
+    } else {
+      // error-handling
+      $("#address").focus();
+      initMap();
+    }
+  });
+
+  // set an empty object for users IP coordinates
+  var userLoc = {};
+
+  // parse JSON response and use lat,long and push into userLoc object
+  $.getJSON('http://ipinfo.io', function(data){
+    console.log(data);
+    var coordinates = data.loc;
+    userLoc = coordinates.split(",");
+
+    var city = data.city,
+        state = data.region;
+
+    $("#area").text(city + ", " + state);
+  });
+
+
+  $(".close").on("click", function() {
+    modal.css({
+      display: 'none'
+    });
+  });
+
+});
+
+
+
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1NwKxBZIY95VlUi4UQu7wAIAnkWwAL-M&amp;sensor=true" async defer></script>
+
+</body>
+
+</html>
