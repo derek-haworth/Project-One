@@ -1,21 +1,66 @@
  @media (min-width: 450px){
-    #buiding-address {
+
+    #featured-info{
+        height:250px;
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); 
+        display:block;
+        position:absolute;
+        top:64px;
+        left:0;
+        z-index:99;  
+    }
+    #featured-buiding-address {
         display:block;
         float:left;
-        height:25vw;
-        width:75vw;
+        height:250px;
+        width:66.6vw;
         padding:25px;
         background-color: #6e5eb4;
+        position:relative;
+        top: 0px;
+        left: 0px;
     }
 
-    #overview-stats {
+    #featured-overview-stats {
         display:block;
         float:left;
-        height:25vw;
-        width:25vw;
+        height:250px;
+        width:33.3vw;
         padding:25px;
-        background-color: #bbff00;   
+        background-color: #bbff00;  
+        position: relative;
+        top: 0px;
+        right: 0px; 
     }
+
+    .review-row{
+        height:200px;
+        width:100vw;
+        display:block;
+        float:left;
+        position:relative;
+        margin-top: 250px;
+        z-index:0;        
+    }
+
+    .overview-stats-left {
+        background-color: #ff0000;
+        height:200px;
+        width:25vw;
+        display:block;
+        float:left;
+    }
+
+    
+    .comments-right {
+        background-color: #ff00c8;
+        height:200px;
+        width:75vw;
+        display:block;
+        float:left;
+    }
+
+
 }
 
 .street-number{

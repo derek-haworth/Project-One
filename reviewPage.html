@@ -13,18 +13,38 @@
     <title>Review Page</title>
 </head>
 <body>
-    <div class="row">
-        <div id="buiding-address">
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Logo</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="sass.html">Sass</a></li>
+            <li><a href="badges.html">Components</a></li>
+            <li><a href="collapsible.html">JavaScript</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="featured-info"class="row">
+        <div id="featured-buiding-address" class="building-address">
             <div class="street-number">400 S. Ashland</div>
             <div class="city">LaGrange</div>
             <div class="state">IL</div>
             <div class="zip">60525</div>
             <div class="review-count">This building has # reviews.</div>
         </div>
-        <div id="overview-stats">
+        <div id="featured-overview-stats" class="overview-stats">
             <div class="stats"></div>
             <div class="lease-time">The average lease time at this building is: # years.</div>
         </div>
+    </div>
+    <div class="review-row row">
+        <div class="overview-stats overview-stats-left">
+                <div class="stats"></div>
+                <div class="lease-time"></div>
+        </div>
+        <div class="comments comments-right">
+            
+        </div>             
     </div>
 </body>
 </html>
