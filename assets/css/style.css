@@ -1,0 +1,51 @@
+ @media (min-width: 450px){
+    #buiding-address {
+        display:block;
+        float:left;
+        height:25vw;
+        width:75vw;
+        padding:25px;
+        background-color: #6e5eb4;
+    }
+
+    #overview-stats {
+        display:block;
+        float:left;
+        height:25vw;
+        width:25vw;
+        padding:25px;
+        background-color: #bbff00;   
+    }
+}
+
+.street-number{
+
+}
+
+.street-number{
+
+}
+
+.city{
+
+}
+
+.state{
+
+}
+
+.zip{
+
+}
+
+.review-count{
+
+}
+
+.stats{
+
+}
+
+.lease-time{
+
+}
