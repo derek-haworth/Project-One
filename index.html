@@ -19,6 +19,9 @@
 	<!--Let browser know website is optimized for mobile-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+	<!-- Link to Firebase Database -->
+	<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+
 </head>
 <body>
 	
@@ -61,29 +64,41 @@
 
 					<!-- Range sliders -->
 					<div id="app">
-						<!-- Overall building condition -->
-						<star-rating :star-size="30"></star-rating>
-
-						<!-- Water -->
-						<star-rating :star-size="30"></star-rating>
-
-						<!-- Air Quality -->
-						<star-rating :star-size="30"></star-rating>
-
-						<!-- Property Management -->
-						<star-rating :star-size="30"></star-rating>
-
-						<!-- Pests -->
-						<star-rating :star-size="30"></star-rating>
-
-						<!-- Electricity -->
-						<star-rating :star-size="30"></star-rating>
-
-						<!-- Hidden Fees -->
-						<star-rating :star-size="30"></star-rating>
-
-						<!-- Cell/internet reception -->
-						<star-rating :star-size="30"></star-rating>
+						<div class="col s6">
+							<!-- Overall building condition -->
+							<label for="bldgCondition-rating">Overall Building Condition</label>
+							<star-rating :star-size="30" class="bldgCondition-rating"></star-rating>
+							<br>
+							<!-- Water -->
+							<label for="water-rating">Water</label>
+							<star-rating :star-size="30" class="water-rating"></star-rating>
+							<br>
+							<!-- Air Quality -->
+							<label for="air-rating">Air Quality</label>
+							<star-rating :star-size="30" class="air-rating"></star-rating>
+							<br>
+							<!-- Property Management -->
+							<label for="management-rating-rating">Management</label>
+							<star-rating :star-size="30" class="management-rating"></star-rating>
+						</div>
+						
+						<div class="col s6">
+							<!-- Pests -->
+							<label for="pests-rating">Pests</label>
+							<star-rating :star-size="30" class="pests-rating"></star-rating>
+							<br>
+							<!-- Electricity -->
+							<label for="electricity-rating">Electricity</label>
+							<star-rating :star-size="30" class="electricity-rating"></star-rating>
+							<br>
+							<!-- Hidden Fees -->
+							<label for="hiddenFees-rating">Hidden Fees</label>
+							<star-rating :star-size="30" class="hiddenFees-rating"></star-rating>
+							<br>
+							<!-- Cell/internet reception -->
+							<label for="cellReception-rating">Cell/Internet Reception</label>
+							<star-rating :star-size="30" class="cellReception-rating"></star-rating>
+						</div>
 					</div>
 
 					<!-- Additional comments -->
@@ -99,7 +114,7 @@
 
 				<div>
 					<div class="modal-footer">
-						<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+						<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat modal-submit">Submit</a>
 					</div>
 				</div>
 
