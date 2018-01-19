@@ -41,6 +41,7 @@ var cellReception = 0;
 
 // Capture Button Click
 $(".modal-submit").on("click", function(event) {
+
 	event.preventDefault();
 
 	// Grabbed values from text-boxes

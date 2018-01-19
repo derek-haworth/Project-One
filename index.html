@@ -67,37 +67,37 @@
 						<div class="col s6">
 							<!-- Overall building condition -->
 							<label for="bldgCondition-rating">Overall Building Condition</label>
-							<star-rating :star-size="30" class="bldgCondition-rating"></star-rating>
+							<star-rating v-model="water" :star-size="30" class="bldgCondition-rating"></star-rating>
 							<br>
 							<!-- Water -->
 							<label for="water-rating">Water</label>
-							<star-rating :star-size="30" class="water-rating"></star-rating>
+							<star-rating v-model="water" :star-size="30" class="water-rating"></star-rating>
 							<br>
 							<!-- Air Quality -->
 							<label for="air-rating">Air Quality</label>
-							<star-rating :star-size="30" class="air-rating"></star-rating>
+							<star-rating v-model="water" :star-size="30" class="air-rating"></star-rating>
 							<br>
 							<!-- Property Management -->
 							<label for="management-rating-rating">Management</label>
-							<star-rating :star-size="30" class="management-rating"></star-rating>
+							<star-rating v-model="water" :star-size="30" class="management-rating"></star-rating>
 						</div>
 						
 						<div class="col s6">
 							<!-- Pests -->
 							<label for="pests-rating">Pests</label>
-							<star-rating :star-size="30" class="pests-rating"></star-rating>
+							<star-rating v-model="water" :star-size="30" class="pests-rating"></star-rating>
 							<br>
 							<!-- Electricity -->
 							<label for="electricity-rating">Electricity</label>
-							<star-rating :star-size="30" class="electricity-rating"></star-rating>
+							<star-rating v-model="water" :star-size="30" class="electricity-rating"></star-rating>
 							<br>
 							<!-- Hidden Fees -->
 							<label for="hiddenFees-rating">Hidden Fees</label>
-							<star-rating :star-size="30" class="hiddenFees-rating"></star-rating>
+							<star-rating v-model="water" :star-size="30" class="hiddenFees-rating"></star-rating>
 							<br>
 							<!-- Cell/internet reception -->
 							<label for="cellReception-rating">Cell/Internet Reception</label>
-							<star-rating :star-size="30" class="cellReception-rating"></star-rating>
+							<star-rating v-model="water" :star-size="30" class="cellReception-rating"></star-rating>
 						</div>
 					</div>
 
@@ -149,10 +149,14 @@
 							}
 						},
 						data: {
-							rating: "No Rating Selected",
-							currentRating: "No Rating",
-							currentSelectedRating: "No Current Rating",
-							boundRating: 3,
+							buildingCondition: bldgCondition,
+							water: water,
+							airQuality: airQuality,
+							management: management,
+							pests: pests,
+							electricity: electricity,
+							hiddenFees: hiddenFees,
+							cellReception: cellReception
 						}
 					});
 				</script>
