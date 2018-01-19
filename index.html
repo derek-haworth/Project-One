@@ -5,110 +5,150 @@
 
 	<title>Homest</title>
 
-	  <!--Import Google Icon Font-->
-	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	  <!--Import materialize.css-->
-	  <link type="text/css" rel="stylesheet" href="assets/materialize/css/materialize.min.css"  media="screen,projection"/>
+	<!-- Link to style.css -->
+	<!-- 	<link rel="stylesheet" href="assets/css/style.css"> -->
 
-	  <!--Let browser know website is optimized for mobile-->
-	  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="assets/materialize/css/materialize.min.css"  media="screen,projection"/>
+
+	<!-- Import jQuery UI css -->
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all"/> 
+
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 </head>
 <body>
+	
 	<!-- Modal Trigger -->
 	<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
 
 	<!-- Modal Structure -->
 	<div id="modal1" class="modal">
-	<div class="modal-content">
-	  <h4>Rate this building.</h4>
-	  
-	<!-- Review Form -->
-	<div class="row">
-		<form class="col s12">
+		<div class="modal-content">
+			<h4>Rate this building.</h4>
 
+			<!-- Review Form -->
 			<div class="row">
-				<div class="input-field col s8">
-				  <input id="name" type="text" class="validate">
-				  <label for="name">Name</label>
+				<form class="col s12">
+
+					<div class="row">
+						<div class="input-field col s8">
+							<input id="name" type="text" class="validate">
+							<label for="name">Name</label>
+						</div>
+
+						<div class="input-field col s4">
+							<input id="unit" type="text" class="validate">
+							<label for="unit">Unit</label>
+						</div>
+					</div>
+
+					<!-- Lease Dates -->
+					<div class="row">
+						<div class="input-field col s6">
+							<input id="lease-start" type="text" class="datepicker">
+							<label for="lease-start">Lease Start</label>
+						</div>
+
+						<div class="input-field col s6">
+							<input id="lease-end" type="text" class="datepicker">
+							<label for="lease-end">Lease End</label>
+						</div>
+					</div>
+
+					<!-- Range sliders -->
+					<div id="app">
+						<!-- Overall building condition -->
+						<star-rating :star-size="30"></star-rating>
+
+						<!-- Water -->
+						<star-rating :star-size="30"></star-rating>
+
+						<!-- Air Quality -->
+						<star-rating :star-size="30"></star-rating>
+
+						<!-- Property Management -->
+						<star-rating :star-size="30"></star-rating>
+
+						<!-- Pests -->
+						<star-rating :star-size="30"></star-rating>
+
+						<!-- Electricity -->
+						<star-rating :star-size="30"></star-rating>
+
+						<!-- Hidden Fees -->
+						<star-rating :star-size="30"></star-rating>
+
+						<!-- Cell/internet reception -->
+						<star-rating :star-size="30"></star-rating>
+					</div>
+
+					<!-- Additional comments -->
+					<div class="row">
+						<div class="input-field col s12">
+							<textarea id="comments" class="materialize-textarea"></textarea>
+							<label for="comments">Additional Comments</label>
+						</div>
+
+					</form>
 				</div>
 
-				<div class="input-field col s4">
-				  <input id="unit" type="text" class="validate">
-				  <label for="unit">Unit</label>
-				</div>
-			</div>
 
-			<!-- Lease Dates -->
-			<div class="row">
-				<div class="input-field col s6">
-					<input id="lease-start" type="text" class="datepicker">
-					<label for="lease-start">Lease Start</label>
+				<div>
+					<div class="modal-footer">
+						<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+					</div>
 				</div>
 
-				<div class="input-field col s6">
-					<input id="lease-end" type="text" class="datepicker">
-					<label for="lease-end">Lease End</label>
-				</div>
-			</div>
 
-			<!-- Range sliders -->
+				<!-- SCRIPTS -->
 
-			<!-- Overall building condition -->
+				<!-- jQuery CDN -->
+				<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+				<!-- jQuery UI CDN -->
+				<!-- 			<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script> -->
+				<!-- Link to Materialize.js -->
+				<script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
+				<!-- Modal JavaScript -->
+				<script src="assets/js/modal.js"></script>
+				<!-- Link to vue.js -->
+				<script src="https://unpkg.com/vue"></script>
+				<script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script>
+				<script>
+					Vue.component('star-rating', VueStarRating.default)
+
+					new Vue({
+						el: '#app',
+						methods: {
+							setRating: function(rating) {
+								this.rating = "You have Selected: " + rating + " stars";
+							},
+							showCurrentRating: function(rating) {
+								this.currentRating = (rating === 0) ? this.currentSelectedRating : "Click to select " + rating + " stars"
+							},
+							setCurrentSelectedRating: function(rating) {
+								this.currentSelectedRating = "You have Selected: " + rating + " stars";
+							}
+						},
+						data: {
+							rating: "No Rating Selected",
+							currentRating: "No Rating",
+							currentSelectedRating: "No Current Rating",
+							boundRating: 3,
+						}
+					});
+				</script>
+
+			</body>
+			</html>
 
 
-			<!-- Water -->
-
-
-			<!-- Air Quality -->
-
-
-			<!-- Property Management -->
-
-
-			<!-- Pests -->
-
-
-			<!-- Electricity -->
-
-
-			<!-- Hidden Fees -->
-
-
-			<!-- Cell/internet reception -->
-
-
-
-			<!-- Additional comments -->
-			<div class="row">
-        		<div class="input-field col s12">
-          		<textarea id="comments" class="materialize-textarea"></textarea>
-          		<label for="comments">Additional Comments</label>
-        	</div>
-
-		</form>
-	</div>
-
-
-	<div>
-		<div class="modal-footer">
-		  <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-		</div>
-	</div>
-
-<!-- jQuery UI CDN -->
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<!-- jQuery CDN -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<!-- Link to Materialize.js -->
-<script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
-<!-- Modal JavaScript -->
-<script src="assets/js/modal.js"></script>
-</body>
-</html>
 
 <!-- 
+NOTES:
 Add icons in modal so they are more clear
 Make modal wizard
 -->
