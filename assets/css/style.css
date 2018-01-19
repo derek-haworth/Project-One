@@ -1,10 +1,14 @@
  @media (min-width: 450px){
 
+    nav{
+        z-index:10000;
+        position:absolute;
+    }
     #featured-info{
         height:250px;
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); 
         display:block;
-        position:absolute;
+        position:relative;
         top:64px;
         left:0;
         z-index:99;  
@@ -13,9 +17,9 @@
         display:block;
         float:left;
         height:250px;
-        width:66.6vw;
+        width:66.66vw;
         padding:25px;
-        background-color: #6e5eb4;
+        background-color: #9AB9BE;
         position:relative;
         top: 0px;
         left: 0px;
@@ -25,39 +29,48 @@
         display:block;
         float:left;
         height:250px;
-        width:33.3vw;
+        width:33.33vw;
         padding:25px;
-        background-color: #bbff00;  
+        background-color: #CAE6A3;  
         position: relative;
         top: 0px;
         right: 0px; 
     }
-
+    #review-wrapper{
+        height:auto;
+        width:100vw;
+        min-height:200px;
+        display:block;
+        float:left;
+        position:relative;
+        margin-top:44px;
+        z-index:0;
+    }
     .review-row{
         height:200px;
         width:100vw;
         display:block;
         float:left;
-        position:relative;
-        margin-top: 250px;
-        z-index:0;        
+        margin-bottom:0px;
     }
 
     .overview-stats-left {
-        background-color: #ff0000;
+        background-color: #F4F4F4;
         height:200px;
         width:25vw;
         display:block;
         float:left;
+        border-bottom: 1px solid rgba(0,0,0,.1);
     }
 
     
     .comments-right {
-        background-color: #ff00c8;
+        background-color: #fff;
         height:200px;
         width:75vw;
         display:block;
         float:left;
+        border-bottom: 1px solid rgba(0,0,0,.1);
     }
 
 
