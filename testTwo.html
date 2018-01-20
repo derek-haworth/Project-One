@@ -314,7 +314,20 @@
 	               infoWindow.open(map, marker);
 	           });
 	           */
+	           	function renderFirebaseObj(obj) {
+	           		function hasCoordinates(coord) {
+	           			if (coord === true) {
+	           				return true;
+	           			} else {
+	           				return false;
+	           		 	}
+	           		}
 
+	           		if (hasCoordinates(coord))	{
+	           			// return the HTML conditions based on response
+	           			// buttons, marker image, etc.
+	           		}
+	           }
 	           var markers = [
 	               {
 	                   coords: {
@@ -322,7 +335,7 @@
 	                       lng: -71.0589
 	                   },
 	                   iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-	                   content: '<h1>Test Title<\/h1>'
+	                   //content: renderFireBaseObj()
 	               }
 	           ];
 
