@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 .comment-section {
 	margin-top: 40px;
 }
 
 @media (min-width: 450px){
+=======
+ @media (min-width: 450px){
+>>>>>>> feature/reviewpage
 
     nav{
         z-index:10000;
@@ -109,3 +113,8 @@
 }
 
 .lease-time{
+<<<<<<< HEAD
+=======
+
+}
+>>>>>>> feature/reviewpage
