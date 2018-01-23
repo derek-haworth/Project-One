@@ -1,114 +1,87 @@
-$(document).ready(function() {
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAJCyPmkk2azsrA9HMVCBCRH9g4dO70H9o",
+    authDomain: "project-one-maps.firebaseapp.com",
+    databaseURL: "https://project-one-maps.firebaseio.com",
+    projectId: "project-one-maps",
+    storageBucket: "project-one-maps.appspot.com",
+    messagingSenderId: "735214191875"
+  };
 
-  window.onload = initMap();
+  firebase.initializeApp(config);
+  var database = firebase.database();
 
-  // User selects 'Allow'
-  function geolocationSuccess(position) {
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
-        center: { lat: 40.712784, lng: -74.005941 }
-    });
+  var btn = '<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Review</a>'
+  // Test Firebase
+  var json = [
+  {
+    "title": "Test1",
+    "lat": 41.900362,
+    "lng": -87.623578,
+    "description": btn
+  },
+  {
+    "title": "Test 2",
+    "lat": 41.897838,
+    "lng": -87.620665,
+    "description": btn
+  },
 
-    var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    var myOptions = {
+]
+
+
+// database.ref().push(json);
+
+
+  database.ref().on("child_added", function(childSnapshot) {
+    console.log(childSnapshot.val());
+
+    // Creating a new map
+    var map = new google.maps.Map(document.getElementById("map"), {
+      // Default Northwestern Campus
+      center: new google.maps.LatLng(41.896601, -87.618751),
       zoom: 16,
-      center: userLatLng,
       styles: mapStyles
-    };
-    // Draw the map
-    var mapObject = new google.maps.Map(document.getElementById("map"), myOptions);
-    // Place the marker
-    var marker = new google.maps.Marker({
-      map: mapObject,
-      position: userLatLng,
-      // icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
     });
-    var contentString = '<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Review</a>'
-    // var contentString = '<p>Current Location</p>'
+
+    // Creating a global infoWindow object that will be reused by all markers
     var infoWindow = new google.maps.InfoWindow();
-    infoWindow.setContent(contentString);
-    infoWindow.open(map, marker);
-    // if user closes infowindow, allow them to open it by clicking on marker
-    marker.addListener('click', function() {
-      infoWindow.open(map, marker);
-    });
-
     var geocoder = new google.maps.Geocoder();
 
-    $('#search').keypress(function(event){
-      var keycode = (event.keyCode ? event.keyCode : event.which);
-      if(keycode == '13'){
-        geocodeAddress(geocoder, map);
-      }    
-    });
-  }
+    // Looping through the Firebase data
+    for (var i = 0, length = json.length; i < length; i++) {
+      var data = json[i],
+        latLng = new google.maps.LatLng(data.lat, data.lng);
 
-  // If user clicks 'Block' or does not select anything
-  function geolocationError(positionError) {
-    var myOptions = {
-      zoom: 16,
-      // Northwestern Coords
-      center: {
-        lat: 41.896601,
-        lng: -87.618751
-      },
-      styles: mapStyles
-    };
-    // Draw the map
-    var mapObject = new google.maps.Map(document.getElementById("map"), myOptions);
-    // Place the marker
-    new google.maps.Marker({
-      map: mapObject,
-      position: {
-        lat: 41.896601,
-        lng: -87.618751
-      }
-    });
-  }
+      // Creating a marker and putting it on the map
+      var marker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        title: data.title
+      });
 
-  /*
-  // If the browser supports the HTML5 Geolocation API
-  function geolocateUser() {
-    if (navigator.geolocation) {
-      var positionOptions = {
-        enableHighAccuracy: true,
-        // If user does not select option, load the error coordinates
-        timeout: 5 * 1000 // 5 seconds
-      };
-      navigator.geolocation.getCurrentPosition(geolocationSuccess, geolocationError, positionOptions);
-    } else {
-      navigator.geolocation.getCurrentPosition(geolocationError);
+      (function(marker, data) {
+        google.maps.event.addListener(marker, "click", function(e) {
+          infoWindow.setContent(data.description);
+          infoWindow.open(map, marker);
+        });
+      })(marker, data);
+
     }
-  }
-  */
-
-});
-
-
-  // initialize the map with the users coordinates
-  function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
-        center: { lat: 40.712784, lng: -74.005941 },
-        styles: mapStyles
-    });
-
-    var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(40.712784, -74.005941),
-        map: map
-    });
-    var geocoder = new google.maps.Geocoder();
 
     $('#search').keypress(function(event){
       var keycode = (event.keyCode ? event.keyCode : event.which);
       if(keycode == '13'){
+        database.ref().push(json)
         geocodeAddress(geocoder, map);
       }    
     });
 
-  }
+  });
+
 
   function geocodeAddress(geocoder, resultsMap) {
+    debugger;
     var address = document.getElementById('search').value;
     geocoder.geocode({'address': address}, function(results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
