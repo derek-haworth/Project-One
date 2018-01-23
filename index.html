@@ -1,9 +1,181 @@
+</!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+	<meta charset="utf-8">
+
+	<title>Homest</title>
+
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="assets/materialize/css/materialize.min.css"  media="screen,projection"/>
+
+	<!-- Import jQuery UI css -->
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all"/> 
+
+	<!--Let browser know website is optimized for mobile (Materialize.js)-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+	<!-- Link to Firebase Database -->
+	<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+
+	<!-- Link to style.css -->
+	<link rel="stylesheet" href="assets/css/style.css">
+
 </head>
 <body>
-	<p>Testing branches</p>
-</body>
-</html>
+	
+	<!-- Modal Trigger -->
+	<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+
+	<!-- Modal Structure -->
+	<div id="modal1" class="modal">
+		<div class="modal-content">
+			<h4>Rate this building.</h4>
+
+			<!-- Review Form -->
+			<div class="row">
+				<form class="col s12">
+
+					<div class="row">
+						<div class="input-field col s12">
+							<input id="name" type="text" class="validate">
+							<label for="name">Name</label>
+						</div>
+					</div>
+
+					<!-- Lease Duration -->
+					<div class="row">
+
+						<div class="input-field col s6">
+							<input id="unit" type="text" class="validate">
+							<label for="unit">Unit #</label>
+						</div>
+
+						<div class="input-field col s6">
+							<input id="lease-duration" type="number" class="validate">
+							<label for="lease-duration">Lease Duration</label>
+						</div>
+					</div>
+
+					<br>
+
+					<!-- Star Ratings -->
+					<div id="app" >
+						<div class="col s6">
+							<!-- Overall building condition -->
+							<label for="bldgCondition-rating">Overall Building Condition</label>
+							<star-rating @rating-selected="setRating($event, 'bldgCondition')" v-model="bldgCondition" :star-size="30" class="bldgCondition-rating"></star-rating>
+							<br>
+							<!-- Water -->
+							<label for="water-rating">Water</label>
+							<star-rating @rating-selected="setRating($event, 'water')" v-model="water" :star-size="30" class="water-rating"></star-rating>
+							<br>
+							<!-- Temperature Regulation -->
+							<label for="tempReg-rating">Temperature Regulation</label>
+							<star-rating @rating-selected="setRating($event, 'tempReg')" v-model="tempReg" :star-size="30" class="tempReg-rating"></star-rating>
+							<br>
+							<!-- Air Quality -->
+							<label for="air-rating">Air Quality</label>
+							<star-rating @rating-selected="setRating($event, 'air')" v-model="air" :star-size="30" class="air-rating"></star-rating>
+							<br>
+							<!-- Property Management -->
+							<label for="management-rating-rating">Management</label>
+							<star-rating @rating-selected="setRating($event, 'management')" v-model="management" :star-size="30" class="management-rating"></star-rating>
+						</div>
+						
+						<div class="col s6">
+							<!-- Pests -->
+							<label for="pests-rating">Pests</label>
+							<star-rating @rating-selected="setRating($event, 'pests')" v-model="pests" :star-size="30" class="pests-rating"></star-rating>
+							<br>
+							<!-- Electricity -->
+							<label for="electricity-rating">Electricity</label>
+							<star-rating @rating-selected="setRating($event, 'electricity')" v-model="electricity" :star-size="30" class="electricity-rating"></star-rating>
+							<br>
+							<!-- Hidden Fees -->
+							<label for="hiddenFees-rating">Hidden Fees</label>
+							<star-rating @rating-selected="setRating($event, 'hiddenFees')" v-model="hiddenFees" :star-size="30" class="hiddenFees-rating"></star-rating>
+							<br>
+							<!-- Cell reception -->
+							<label for="cellReception-rating">Cell Reception</label>
+							<star-rating @rating-selected="setRating($event, 'cellReception')" v-model="cellReception" :star-size="30" class="cellReception-rating"></star-rating>
+							<br>
+							<!-- Internet -->
+							<label for="internet-rating">Internet</label>
+							<star-rating @rating-selected="setRating($event, 'internet')" v-model="internet" :star-size="30" class="internet-rating"></star-rating>
+						</div>
+					</div>
+					<br>
+					<div id="reviewsHidden">
+					</div>
+					<!-- Additional comments -->
+					<div class="row">
+						<div class="comment-section input-field col s12">
+							<textarea id="comments" class="materialize-textarea"></textarea>
+							<label for="comments">Additional Comments</label>
+						</div>
+
+					</form>
+				</div>
+
+
+				<div>
+					<div class="modal-footer">
+						<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat modal-submit" v-on:click.prevent="post">ADD REVIEW</a>
+					</div>
+				</div>
+
+
+				<!-- SCRIPTS -->
+
+				<!-- jQuery CDN -->
+				<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+				<!-- jQuery UI CDN -->
+				<!-- 			<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script> -->
+				<!-- Link to Materialize.js -->
+				<script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
+				<!-- Modal JavaScript -->
+				<script src="assets/js/modal.js"></script>
+				<!-- Link to vue.js -->
+				<script src="https://unpkg.com/vue"></script>
+				<script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script>
+				<script>
+
+				Vue.component('star-rating', VueStarRating.default)
+
+				var vm = new Vue({
+						el: '#app',
+						methods: {
+							setRating: function(rating, prop){
+								//in here you need to get your firebase object and then set the ratings 
+      						  //this.rating= rating;
+      						  this.rating = rating;
+    						}
+						},
+						data: {
+								bldgCondition: 0,
+								water: 0,
+								air: 0,
+								management: 0,
+								pests: 0,
+								electricity: 0,
+								hiddenFees: 0,
+								cellReception: 0,
+								tempReg: 0,
+								internet: 0
+						}
+					});
+		
+				</script>
+
+			</body>
+			</html>
+
+
+
+<!-- 
+NOTES:
+Add icons in modal so they are more clear
+Make modal wizard
+-->
