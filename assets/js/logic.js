@@ -2,14 +2,23 @@
 1. Establish geolocation on page load
 2. if user declines then set coordinates to Chicago Loop
 3. Implement autocomplete address in search bar
-4. Search address and upon click or enter then initialize Google Map Api
+4. Search address and upon click/enter then initialize Google Map Api
 5. Parse address into Lat, Long coordinates
 6. Set marker and info window conditions
 7. Push coordinates into Firebase
-8. If user clicks review, trigger modal window
-8a. If user cancels or clicks view then clear out coordinates in Firebase.
-9. 
+8A. If user clicks review, trigger modal window
+	1. record/store the form submit values
+	2. push everything to Firebase unqiue key (coordinates) object
+	3. Update the frontend review.html with added values
+8B. If user cancels or clicks view
+	1. Unset/remove() coordinates in Firebase - no need to store anything if no reviews
+	2. Wait for user to search again - See step 3 
 
+
+TODO - Map out method for storing new reviews/markers - Ex: "child_added", etc. 
+		so we can load previously set markers on the map when the page is reloaded/revisiting
+	- Trigger Firebase object when 'view' button clicked to retrieve the review information and
+		display on the UI.
 
 */
 
