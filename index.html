@@ -69,41 +69,41 @@
 							<br>
 							<!-- Water -->
 							<label for="water-rating">Water</label>
-							<star-rating @rating-selected ="setRating" v-model="water" :star-size="30" class="water-rating"></star-rating>
+							<star-rating @rating-selected="setRating($event, 'water')" v-model="water" :star-size="30" class="water-rating"></star-rating>
 							<br>
 							<!-- Temperature Regulation -->
 							<label for="tempReg-rating">Temperature Regulation</label>
-							<star-rating v-model="tempReg" :star-size="30" class="tempReg-rating"></star-rating>
+							<star-rating @rating-selected="setRating($event, 'tempReg')" v-model="tempReg" :star-size="30" class="tempReg-rating"></star-rating>
 							<br>
 							<!-- Air Quality -->
 							<label for="air-rating">Air Quality</label>
-							<star-rating v-model="air" :star-size="30" class="air-rating"></star-rating>
+							<star-rating @rating-selected="setRating($event, 'air')" v-model="air" :star-size="30" class="air-rating"></star-rating>
 							<br>
 							<!-- Property Management -->
 							<label for="management-rating-rating">Management</label>
-							<star-rating v-model="management" :star-size="30" class="management-rating"></star-rating>
+							<star-rating @rating-selected="setRating($event, 'management')" v-model="management" :star-size="30" class="management-rating"></star-rating>
 						</div>
 						
 						<div class="col s6">
 							<!-- Pests -->
 							<label for="pests-rating">Pests</label>
-							<star-rating v-model="pests" :star-size="30" class="pests-rating"></star-rating>
+							<star-rating @rating-selected="setRating($event, 'pests')" v-model="pests" :star-size="30" class="pests-rating"></star-rating>
 							<br>
 							<!-- Electricity -->
 							<label for="electricity-rating">Electricity</label>
-							<star-rating v-model="electricity" :star-size="30" class="electricity-rating"></star-rating>
+							<star-rating @rating-selected="setRating($event, 'electricity')" v-model="electricity" :star-size="30" class="electricity-rating"></star-rating>
 							<br>
 							<!-- Hidden Fees -->
 							<label for="hiddenFees-rating">Hidden Fees</label>
-							<star-rating v-model="hiddenFees" :star-size="30" class="hiddenFees-rating"></star-rating>
+							<star-rating @rating-selected="setRating($event, 'hiddenFees')" v-model="hiddenFees" :star-size="30" class="hiddenFees-rating"></star-rating>
 							<br>
 							<!-- Cell reception -->
 							<label for="cellReception-rating">Cell Reception</label>
-							<star-rating v-model="cellReception" :star-size="30" class="cellReception-rating"></star-rating>
+							<star-rating @rating-selected="setRating($event, 'cellReception')" v-model="cellReception" :star-size="30" class="cellReception-rating"></star-rating>
 							<br>
 							<!-- Internet -->
 							<label for="internet-rating">Internet</label>
-							<star-rating v-model="internet" :star-size="30" class="internet-rating"></star-rating>
+							<star-rating @rating-selected="setRating($event, 'internet')" v-model="internet" :star-size="30" class="internet-rating"></star-rating>
 						</div>
 					</div>
 					<br>
@@ -141,20 +141,29 @@
 				<script src="https://unpkg.com/vue"></script>
 				<script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script>
 				<script>
-					Vue.component('star-rating', VueStarRating.default)
 
-				 new Vue({
+				Vue.component('star-rating', VueStarRating.default)
+
+				// Star Ratings
+				var bldgCondition = 0;
+				var water = 0;
+				var tempReg = 0;
+				var airQuality = 0;
+				var management = 0;
+				var pests = 0;
+				var electricity = 0;
+				var hiddenFees = 0;
+				var cellRecept = 0;
+				var internet = 0;
+
+
+				var vm = new Vue({
 						el: '#app',
 						methods: {
-							firebase: function() {
-								// this.$http.post('https://project-1-8d0e8.firebaseio.com/ratings.json', this)
-								console.log("HI");
-							},
 							setRating: function(rating, prop){
-								console.log(rating, prop)
 								//in here you need to get your firebase object and then set the ratings 
-								data[prop] = rating;
       						  //this.rating= rating;
+      						  this.rating = rating;
     						}
 						},
 						data: {
