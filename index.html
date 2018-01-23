@@ -61,15 +61,19 @@
 					<br>
 
 					<!-- Star Ratings -->
-					<div id="app">
+					<div id="app" >
 						<div class="col s6">
 							<!-- Overall building condition -->
 							<label for="bldgCondition-rating">Overall Building Condition</label>
-							<star-rating v-model="bldgCondition" :star-size="30" class="bldgCondition-rating"></star-rating>
+							<star-rating @rating-selected="setRating($event, 'bldgCondition')" v-model="bldgCondition" :star-size="30" class="bldgCondition-rating"></star-rating>
 							<br>
 							<!-- Water -->
 							<label for="water-rating">Water</label>
-							<star-rating v-model="water" :star-size="30" class="water-rating"></star-rating>
+							<star-rating @rating-selected ="setRating" v-model="water" :star-size="30" class="water-rating"></star-rating>
+							<br>
+							<!-- Temperature Regulation -->
+							<label for="tempReg-rating">Temperature Regulation</label>
+							<star-rating v-model="tempReg" :star-size="30" class="tempReg-rating"></star-rating>
 							<br>
 							<!-- Air Quality -->
 							<label for="air-rating">Air Quality</label>
@@ -93,12 +97,18 @@
 							<label for="hiddenFees-rating">Hidden Fees</label>
 							<star-rating v-model="hiddenFees" :star-size="30" class="hiddenFees-rating"></star-rating>
 							<br>
-							<!-- Cell/internet reception -->
-							<label for="cellReception-rating">Cell/Internet Reception</label>
+							<!-- Cell reception -->
+							<label for="cellReception-rating">Cell Reception</label>
 							<star-rating v-model="cellReception" :star-size="30" class="cellReception-rating"></star-rating>
+							<br>
+							<!-- Internet -->
+							<label for="internet-rating">Internet</label>
+							<star-rating v-model="internet" :star-size="30" class="internet-rating"></star-rating>
 						</div>
 					</div>
 					<br>
+					<div id="reviewsHidden">
+					</div>
 					<!-- Additional comments -->
 					<div class="row">
 						<div class="comment-section input-field col s12">
@@ -112,7 +122,7 @@
 
 				<div>
 					<div class="modal-footer">
-						<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat modal-submit">Submit</a>
+						<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat modal-submit" v-on:click.prevent="post">ADD REVIEW</a>
 					</div>
 				</div>
 
@@ -133,30 +143,37 @@
 				<script>
 					Vue.component('star-rating', VueStarRating.default)
 
-					new Vue({
+				 new Vue({
 						el: '#app',
 						methods: {
-							setRating: function(rating) {
-								this.rating = "You have Selected: " + rating + " stars";
+							firebase: function() {
+								// this.$http.post('https://project-1-8d0e8.firebaseio.com/ratings.json', this)
+								console.log("HI");
 							},
-							showCurrentRating: function(rating) {
-								this.currentRating = (rating === 0) ? this.currentSelectedRating : "Click to select " + rating + " stars"
-							},
-							setCurrentSelectedRating: function(rating) {
-								this.currentSelectedRating = "You have Selected: " + rating + " stars";
-							}
+							setRating: function(rating, prop){
+								console.log(rating, prop)
+								//in here you need to get your firebase object and then set the ratings 
+								data[prop] = rating;
+      						  //this.rating= rating;
+    						}
 						},
 						data: {
-							bldgCondition: 0,
-							water: 0,
-							air: 0,
-							management: 0,
-							pests: 0,
-							electricity: 0,
-							hiddenFees: 0,
-							cellReception: 0
+								bldgCondition: 0,
+								water: 0,
+								air: 0,
+								management: 0,
+								pests: 0,
+								electricity: 0,
+								hiddenFees: 0,
+								cellReception: 0,
+								tempReg: 0,
+								internet: 0
 						}
 					});
+
+
+
+					
 				</script>
 
 			</body>

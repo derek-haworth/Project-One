@@ -3,73 +3,101 @@ $(document).ready(function(){
 	$('#modal1').modal();
 
 
-
 	// Initialize Firebase
 
 	var config = {
-		apiKey: "AIzaSyCA3PWKYA42bM2Tz7ofOY72jOI2QdtH5gM",
-		authDomain: "apartmentyelp.firebaseapp.com",
-		databaseURL: "https://apartmentyelp.firebaseio.com",
-		projectId: "apartmentyelp",
-		storageBucket: "apartmentyelp.appspot.com",
-		messagingSenderId: "339519487350"
+		apiKey: "AIzaSyBJVVmkoI4kqEULZglV7X0oUfeT2_LuReA",
+		authDomain: "project-1-8d0e8.firebaseapp.com",
+		databaseURL: "https://project-1-8d0e8.firebaseio.com",
+		projectId: "project-1-8d0e8",
+		storageBucket: "project-1-8d0e8.appspot.com",
+		messagingSenderId: "1010869223986"
 	};
 
-	firebase.initializeApp(config);
+	var app = firebase.initializeApp(config);
 
 	// Create a variable to reference the database.
-	var database = firebase.database();
+	var database = app.database();
 
 
-	// Initial Values
-	var count = 0;
-	var newReview = { };
-	var name = "";
-	var date = ""; // Date
-	var unit = "";
-	var leaseDur = 0;
+	// // Initial Values
+	// var count = 0;
+	// var newReview = { };
+	// var name = "";
+	// var date = ""; // Date
+	// var unit = "";
+	// var leaseDur = 0;
 
-	// Star Ratings
-	var bldgCondition = 0;
-	var water = 0;
-	var tempReg = 0; // new
-	var airQuality = 0;
-	var management = 0;
-	var pests = 0;
-	var electricity = 0;
-	var hiddenFees = 0;
-	var cellRecept = 0;
-	var internet = 0; // new
+	// // Star Ratings
+	// var bldgCondition = 0;
+	// var water = 0;
+	// var tempReg = 0; // new
+	// var airQuality = 0;
+	// var management = 0;
+	// var pests = 0;
+	// var electricity = 0;
+	// var hiddenFees = 0;
+	// var cellRecept = 0;
+	// var internet = 0; // new
 
-	// Comments
-	var comments = "";
+	// // Comments
+	// var comments = "";
 
-	// Make object helper function
-	var makeObj = function () {
-		newReview = {
-			name: name,
-			date: date,
-			unit: unit,
-			leaseDur: leaseDur,
-			// star reviews:
-			bldgCondition: bldgCondition,
-			water: water,
-			tempReg: tempReg,
-			airQuality: airQuality,
-			management: management,
-			pests: pests,
-			electricity: electricity,
-			hiddenFees: hiddenFees,
-			cellReception: cellRecept,
-			internet: internet,
-			// additional comments:
-			comments: comments
-		};
-	};
+	// // Make object helper function
+	// var makeObj = function () {
+	// 	newReview = {
+	// 		name: name,
+	// 		date: date,
+	// 		unit: unit,
+	// 		leaseDur: leaseDur,
+	// 		// star reviews:
+	// 		bldgCondition: bldgCondition,
+	// 		water: water,
+	// 		tempReg: tempReg,
+	// 		airQuality: airQuality,
+	// 		management: management,
+	// 		pests: pests,
+	// 		electricity: electricity,
+	// 		hiddenFees: hiddenFees,
+	// 		cellReception: cellRecept,
+	// 		internet: internet,
+	// 		// additional comments:
+	// 		comments: comments
+	// 	};
+	// };
 
+	// Vue.component('star-rating', VueStarRating.default)
 
+	// new Vue({
+	// 	el: '#app',
 
+	// 	data: {
+	// 		bldgCondition: 0,
+	// 		water: 0,
+	// 		air: 0,
+	// 		management: 0,
+	// 		pests: 0,
+	// 		electricity: 0,
+	// 		hiddenFees: 0,
+	// 		cellReception: 0,
+	// 		tempReg: 0,
+	// 		internet: 0
+	// 	},
 
+	// 	methods: {
+	// 		submitReview: function() {
+	// 			var data = new FormData
+	// 			this.$http.post('https://project-1-8d0e8.firebaseio.com/', { bldgCondition: this.bldgCondition, water: this.water }).then(
+	// 				function(response) {
+	// 					window.location.href="https://project-1-8d0e8.firebaseio.com/" ;
+	// 				},
+	// 				function(response) {
+	// 					that.errors = response.data.errors
+	// 				}
+	// 				)
+	// 		}
+	// 	}
+	// });	
 
 
 
@@ -87,17 +115,26 @@ $(document).ready(function(){
 
 
 		// Code for "Setting values in the database"
-		database.ref().set({
-			count: count
-
+		database.ref().push({
+			name: name,
+			unit: unit,
+			leaseDur: leaseDur,
+			comments: comments
 		});
 
 	});
 
-
 });
 
 
+
+// var rating = $("#app > div:nth-child(1) > div.bldgCondition-rating.vue-star-rating > div > span.vue-star-rating-rating-text").text().trim();
+
+// var captureRating = function(ratingClass) {
+// 	$(ratingClass).on("click"), function(){
+
+// 	}
+// }
 
 
 
