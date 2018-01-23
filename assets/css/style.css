@@ -6,20 +6,85 @@ html, body {
 .app-container {
     height: 100%;
 }
-
-/* Header */
+.app-container .row {
+    margin-bottom: 0;
+}
 .navbar-fixed {
     position: fixed;
-    top: 0;
-    z-index: 1000;
 }
-.address-bar-input {
-    margin: 0 auto;
-    max-width: 400px;
+
+/* Header */
+.page-topbar .header-search-wrapper {
+    margin: 10px auto 0 260px;
+    width: calc(100% - 600px);
+    height: 40px;
+    display: inline-block;
+    position: relative;
+    -webkit-transition: .3s ease all;
+    -o-transition: .3s ease all;
+    -moz-transition: .3s ease all;
+    transition: .3s ease all;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
-input.search {
-    margin: 0!important;
+.page-topbar .header-search-wrapper i {
+    position: absolute;
+    font-size: 24px;
+    top: 6px;
+    left: 24px;
+    line-height: 32px !important;
+    -webkit-transition: color 200ms ease;
+    transition: color 200ms ease;
 }
+.page-topbar input.header-search-input {
+    display: block;
+    padding: 8px 8px 8px 72px;
+    width: 87%;
+    background: rgba(255, 255, 255, 0.3);
+    height: 24px;
+    -webkit-transition: all 200ms ease;
+    transition: all 200ms ease;
+    border: none;
+    font-size: 16px;
+    appearance: textfield;
+    font-weight: 400;
+    outline: none;
+    border-radius: 3px;
+}
+.page-topbar input.header-search-input:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+.page-topbar input.header-search-input:focus {
+    color: #333;
+    background: #fff;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+/* Logo/Title */
+nav ul a:hover {
+    background-color: inherit !important;
+}
+h1.logo-wrapper {
+    margin: 0;
+}
+header .brand-logo {
+    margin: 1px 0px;
+    padding: 22px 20px;
+    line-height: 0;
+}
+header .brand-logo img {
+    height: 18px;
+}
+h1 span.logo-text {
+    font-size: 26px;
+    padding-left: 8px;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s linear;
+}
+
 /* Google Map  */
 #map {
     height: 100%;

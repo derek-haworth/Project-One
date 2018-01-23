@@ -25,23 +25,28 @@
 <body>
 
 <div class="app-container">
-	<div class="row">
+	<header id="header" class="page-topbar">
 		<div class="navbar-fixed">
-			<nav>
+			<nav class="navbar-color">
 				<div class="nav-wrapper">
-					<div class="col s12">
-						<a href="#" class="brand-logo">Homest</a>
-
-						<div class="address-bar-input">
-							<div class="input-field">
-								<input id="search" class="search" type="text" placeholder="Search" >
-							</div>
-						</div>	
-					</div>
+					<ul class="left">
+						<li>
+							<h1 class="logo-wrapper">
+								<a href="" class="brand-logo">
+									<img src="">
+									<span class="logo-text hide-on-med-and-down">Homest</span>
+								</a>
+							</h1>
+						</li>
+					</ul>
+					<div class="header-search-wrapper hide-on-med-and-down">
+						<i class="material-icons">search</i>
+						<input type="text" name="Search" id="search" class="header-search-input z-depth-2" placeholder="Explore">
+					</div>    
 				</div>
 			</nav>
 		</div>
-	</div>
+	</header>
 
 	<!-- Google Map -->
 	<div id="map"></div>
