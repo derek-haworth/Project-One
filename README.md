@@ -1,11 +1,11 @@
 # Project-One
-> Name subject to change
+## Homest
 
-## About the project
+### About the project
 
-This was project one for Northwestern Coding Bootcamp. By [Enas Siddiqi](https://github.com/esiddi4), [Caitlin Everett](https://github.com/CaitlinEverett), and [Derek Haworth](https://github.com/derek-haworth).
+Homest is project one for Northwestern Coding Bootcamp. By [Enas Siddiqi](https://github.com/esiddi4), [Caitlin Everett](https://github.com/CaitlinEverett), and [Derek Haworth](https://github.com/derek-haworth).
 
-## Project deliverables
+### Project deliverables
 
 - Must uses at least two APIs
 - Must use AJAX to pull data
@@ -19,12 +19,12 @@ This was project one for Northwestern Coding Bootcamp. By [Enas Siddiqi](https:/
 - Must have User Input Validation
 
 
-## In this repository
+### In this repository
 
 - Website code
 - TBD
 - TBD
 
-## Thank you
+### Thank you
 
 With special thanks to our instructors, Steven Daoud, Pat Beecher, Chris Mendoza, and the rest of the Northwestern staff.
