@@ -1,14 +1,44 @@
+html, body {
+    height:  100%;
+    margin: 0;
+    padding: 0;
+}
+.app-container {
+    height: 100%;
+}
+
+/* Header */
+.navbar-fixed {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+.address-bar-input {
+    margin: 0 auto;
+    max-width: 400px;
+}
+input.search {
+    margin: 0!important;
+}
+/* Google Map  */
+#map {
+    height: 100%;
+}
+
+
+
+/* Review Modal */
 .comment-section {
 	margin-top: 40px;
 }
 
 @media (min-width: 450px){
 
-    nav{
-        z-index:10000;
+    nav  {
+        z-index: 10000;
         position:absolute;
     }
-    #featured-info{
+    #featured-info  {
         height:250px;
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); 
         display:block;
@@ -40,7 +70,7 @@
         top: 0px;
         right: 0px; 
     }
-    #review-wrapper{
+    #review-wrapper {
         height:auto;
         width:100vw;
         min-height:200px;
@@ -50,14 +80,13 @@
         margin-top:44px;
         z-index:0;
     }
-    .review-row{
+    .review-row {
         height:200px;
         width:100vw;
         display:block;
         float:left;
         margin-bottom:0px;
     }
-
     .overview-stats-left {
         background-color: #F4F4F4;
         height:200px;
@@ -65,9 +94,7 @@
         display:block;
         float:left;
         border-bottom: 1px solid rgba(0,0,0,.1);
-    }
-
-    
+    }    
     .comments-right {
         background-color: #fff;
         height:200px;
@@ -76,8 +103,6 @@
         float:left;
         border-bottom: 1px solid rgba(0,0,0,.1);
     }
-
-
 }
 
 .street-number{
