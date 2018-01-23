@@ -2,7 +2,8 @@
 	margin-top: 40px;
 }
 
- @media (min-width: 450px){
+@media (min-width: 450px){
+
     nav{
         z-index:10000;
         position:absolute;
@@ -108,4 +109,5 @@
 }
 
 .lease-time{
+
 }
