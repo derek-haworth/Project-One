@@ -1,14 +1,109 @@
+html, body {
+    height:  100%;
+    margin: 0;
+    padding: 0;
+}
+.app-container {
+    height: 100%;
+}
+.app-container .row {
+    margin-bottom: 0;
+}
+.navbar-fixed {
+    position: fixed;
+}
+
+/* Header */
+.page-topbar .header-search-wrapper {
+    margin: 10px auto 0 260px;
+    width: calc(100% - 600px);
+    height: 40px;
+    display: inline-block;
+    position: relative;
+    -webkit-transition: .3s ease all;
+    -o-transition: .3s ease all;
+    -moz-transition: .3s ease all;
+    transition: .3s ease all;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.page-topbar .header-search-wrapper i {
+    position: absolute;
+    font-size: 24px;
+    top: 6px;
+    left: 24px;
+    line-height: 32px !important;
+    -webkit-transition: color 200ms ease;
+    transition: color 200ms ease;
+}
+.page-topbar input.header-search-input {
+    display: block;
+    padding: 8px 8px 8px 72px;
+    width: 87%;
+    background: rgba(255, 255, 255, 0.3);
+    height: 24px;
+    -webkit-transition: all 200ms ease;
+    transition: all 200ms ease;
+    border: none;
+    font-size: 16px;
+    appearance: textfield;
+    font-weight: 400;
+    outline: none;
+    border-radius: 3px;
+}
+.page-topbar input.header-search-input:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+.page-topbar input.header-search-input:focus {
+    color: #333;
+    background: #fff;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+/* Logo/Title */
+nav ul a:hover {
+    background-color: inherit !important;
+}
+h1.logo-wrapper {
+    margin: 0;
+}
+header .brand-logo {
+    margin: 1px 0px;
+    padding: 22px 20px;
+    line-height: 0;
+}
+header .brand-logo img {
+    height: 18px;
+}
+h1 span.logo-text {
+    font-size: 26px;
+    padding-left: 8px;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s linear;
+}
+
+/* Google Map  */
+#map {
+    height: 100%;
+}
+
+
+
+/* Review Modal */
 .comment-section {
 	margin-top: 40px;
 }
 
 @media (min-width: 450px){
 
-    nav{
-        z-index:10000;
+    nav  {
+        z-index: 10000;
         position:absolute;
     }
-    #featured-info{
+    #featured-info  {
         height:250px;
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); 
         display:block;
@@ -40,7 +135,7 @@
         top: 0px;
         right: 0px; 
     }
-    #review-wrapper{
+    #review-wrapper {
         height:auto;
         width:100vw;
         min-height:200px;
@@ -50,14 +145,13 @@
         margin-top:44px;
         z-index:0;
     }
-    .review-row{
+    .review-row {
         height:200px;
         width:100vw;
         display:block;
         float:left;
         margin-bottom:0px;
     }
-
     .overview-stats-left {
         background-color: #F4F4F4;
         height:200px;
@@ -65,9 +159,7 @@
         display:block;
         float:left;
         border-bottom: 1px solid rgba(0,0,0,.1);
-    }
-
-    
+    }    
     .comments-right {
         background-color: #fff;
         height:200px;
@@ -76,8 +168,6 @@
         float:left;
         border-bottom: 1px solid rgba(0,0,0,.1);
     }
-
-
 }
 
 .street-number{
