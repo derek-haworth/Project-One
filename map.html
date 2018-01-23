@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link type="text/css" rel="stylesheet" href="assets/materialize/css/materialize.min.css"  media="screen,projection"/>
+    <!-- Link to Firebase Database -->
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+    <style>
+
+    nav {
+      position: absolute;
+      top: 0;
+      z-index: 999;
+    }
+     
+      #map {
+        height: 100%;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #form1{
+        margin-left:200px;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <div class="navbar-fixed ">
+  <nav>
+    <div class="nav-wrapper blue-grey">
+      <a href="#" class="brand-logo">Homest</a>
+
+       <form class=" hide-on-med-and-down" id="form1" >
+        <div class="input-field" style="max-width: 400pt;">
+          <input id="search" type="search" placeholder="Search" >
+          <label class="label-icon" for="search"><i class="material-icons"></i></label>
+          <i class="material-icons">X</i>
+        </div>
+      </form>
+      </div>
+      </nav>
+    </div>
+  
+    <div id="map"></div>
+
+      
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="mapStyles.js"></script>
+    <script src="logic.js"></script>
+    <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1NwKxBZIY95VlUi4UQu7wAIAnkWwAL-M"></script>
+    
+  </body>
+</html>
