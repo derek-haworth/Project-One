@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 	// the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
 	$('#modal1').modal();
@@ -14,13 +15,14 @@ $(document).ready(function(){
 
 	firebase.initializeApp(config);
 
+
+
 	// Create a variable to reference the database.
 	var database = firebase.database();
 	var apartments = firebase.database().ref('apartments');
 
-
 	//latitude-longitude
-	var latLong = "41^8781_87^6299";  //hard coded for now
+	var latLong = "41^8781_87^6297";  //hard coded for now
 
 	// Initial Values
 	var count = 0;
@@ -35,16 +37,46 @@ $(document).ready(function(){
 	var bldgCondition = 0;
 	var water = 0;
 	var tempReg = 0; // new
-	var airQuality = 0;
+	var air = 0;
 	var management = 0;
 	var pests = 0;
 	var electricity = 0;
 	var hiddenFees = 0;
-	var cellRecept = 0;
+	var cell = 0;
 	var internet = 0; // new
 
 	// Comments
 	var comments = "";
+
+	//Vue stuff
+	Vue.component('star-rating', VueStarRating.default);
+
+	window.vm = new Vue({
+		   el: '#app',
+		   methods: {
+			   setRating: function(rating) {
+				   this.rating = "You have Selected: " + rating + " stars";
+			   },
+			   showCurrentRating: function(rating) {
+				   this.currentRating = (rating === 0) ? this.currentSelectedRating : "Click to select " + rating + " stars"
+			   },
+			   setCurrentSelectedRating: function(rating) {
+				   this.currentSelectedRating = "You have Selected: " + rating + " stars";
+			   }
+		   },
+		   data: {
+			   bldgCondition: 0,
+			   water: 0,
+			   tempReg: 0,
+			   air: 0,
+			   management: 0,
+			   pests: 0,
+			   electricity: 0,
+			   hiddenFees: 0,
+			   cell: 0,
+			   internet: 0
+		   }
+	   });
 
 
 	// Capture Button Click
@@ -66,16 +98,16 @@ $(document).ready(function(){
 				unit: unit,
 				leaseDur: leaseDur,
 				// star reviews:
-				bldgCondition: bldgCondition,
-				water: water,
-				tempReg: tempReg,
-				airQuality: airQuality,
-				management: management,
-				pests: pests,
-				electricity: electricity,
-				hiddenFees: hiddenFees,
-				cellReception: cellRecept,
-				internet: internet,
+				bldgCondition: vm.bldgCondition,
+				water: vm.water,
+				tempReg: vm.tempReg,
+				air: vm.air,
+				management: vm.management,
+				pests: vm.pests,
+				electricity: vm.electricity,
+				hiddenFees: vm.hiddenFees,
+				cell: vm.cell,
+				internet: vm.internet,
 				// additional comments:
 				comments: comments
 			};
