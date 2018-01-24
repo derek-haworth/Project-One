@@ -101,12 +101,12 @@ h1 span.logo-text {
 
    
     #test-button{
-        right: 0px;
+        right: 40px;
         top: 0px;
         position: absolute;
         font-size: 40px;
         z-index: 99999999999;
-        color: #000;
+        color: #fff;
     }
     #featured-info{
         height:175px;
