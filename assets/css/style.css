@@ -150,6 +150,8 @@ h1 span.logo-text {
         position:relative;
         /* margin-top:44px; */
         z-index:0;
+        color: #fff;
+        font-weight: bold;
     }
     .review-row{
         height:200px;

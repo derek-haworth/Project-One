@@ -38,28 +38,28 @@ $(document).ready(function() {
   var lng;
   var formattedAddress;
 
-  var count = 0;
-  var newReview = { };
-  var name = "";
-  var date = ""; // Date
-  var unit = "";
-  var leaseDur = 0;
+  // var count = 0;
+  // var newReview = { };
+  // var name = "";
+  // var date = ""; // Date
+  // var unit = "";
+  // var leaseDur = 0;
   
 
-  // Star Ratings
-  var bldgCondition = 0;
-  var water = 0;
-  var tempReg = 0; // new
-  var air = 0;
-  var management = 0;
-  var pests = 0;
-  var electricity = 0;
-  var hiddenFees = 0;
-  var cell = 0;
-  var internet = 0; // new
+  // // Star Ratings
+  // var bldgCondition = 0;
+  // var water = 0;
+  // var tempReg = 0; // new
+  // var air = 0;
+  // var management = 0;
+  // var pests = 0;
+  // var electricity = 0;
+  // var hiddenFees = 0;
+  // var cell = 0;
+  // var internet = 0; // new
 
-  // Comments
-  var comments = "";
+  // // Comments
+  // var comments = "";
 
 
   function geocodeAddress(geocoder, resultsMap) {
@@ -134,10 +134,10 @@ $(document).ready(function() {
     event.preventDefault();
 
     // Grabbed values from form
-    name = $("#name").val().trim();
-    unit = $("#unit").val().trim();
-    leaseDur = $("#lease-duration").val();
-    comments = $("#comments").val().trim();
+    var name = $("#name").val().trim();
+    var unit = $("#unit").val().trim();
+    var leaseDur = $("#lease-duration").val();
+    var comments = $("#comments").val().trim();
 
     var address = {
       formattedAddress: formattedAddress,
@@ -148,7 +148,7 @@ $(document).ready(function() {
     // Star Ratings
     var review = {
       name: name,
-      date: date,
+      // date: date,
       unit: unit,
       leaseDur: leaseDur,
         // star reviews:
@@ -178,6 +178,8 @@ $(document).ready(function() {
     unit = $("#unit").val("");
     leaseDur = $("#lease-duration").val("");
     comments = $("#comments").val("");
+
+    window.location.reload();
   });
 
 
@@ -204,18 +206,38 @@ $(document).ready(function() {
     var map = new google.maps.Map(document.getElementById("map"), {
       // Default Northwestern Campus
       center: new google.maps.LatLng(41.896601, -87.618751),
-      zoom: 16,
+      zoom: 14,
       styles: mapStyles
     });
 
+    var html = `
+          <div class="row">
+            <div class="col s12 m12">
+              <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title"></span>
+                  <p>This building has (# of reviews) reviews.</p>
+                  <br>
+                  <p class="view-btn"></p>
+                </div>
+              </div>
+            </div> 
+          </div>
+
+          <div class="row">
+            <div id="review-wrapper" class="col s12 m12">
+            </div>
+          </div>
+          `;
     // Creating a global infoWindow object that will be reused by all markers
-    var infoWindow = new google.maps.InfoWindow();
+    var infoWindow = new google.maps.InfoWindow({
+      content: html
+    });
     var geocoder = new google.maps.Geocoder();
 
 
     // Looping through the Firebase data
     for (o in apartments) {
-      debugger;
 
       // Retrieve Lat/Lng Coords
       var latLng = new google.maps.LatLng(apartments[o].address.lat, apartments[o].address.lng);
@@ -237,37 +259,16 @@ $(document).ready(function() {
       (function(marker, apartments) {
         google.maps.event.addListener(marker, "click", function(e) {
       
-        var html = `
-          <div class="row">
-            <div class="col s12 m12">
-              <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                  <span class="card-title">${marker.title}</span>
-                  <p>This building has (# of reviews) reviews.</p>
-                  <br>
-                  <p>${btn}</p>
-                </div>
-              </div>
-            </div> 
-          </div>
-
-          <div class="row">
-            <div id="review-wrapper" class="col s12 m12">
-            </div>
-          </div>
-          `;
-
-
-          infoWindow.setContent(html);
           infoWindow.open(map, marker);
 
         var formattedAddress = apartments[o].address.formattedAddress;
+        $(".card-title").html(marker.title);
+        $(".view-btn").html(btn);
 
         for (x in apartments[o].reviews) {
-          debugger;
           // user info
           var name = apartments[o].reviews[x].name;
-          var date = apartments[o].reviews[x].date;
+          // var date = apartments[o].reviews[x].date;
           var unit = apartments[o].reviews[x].unit;
           var leaseDur = apartments[o].reviews[x].leaseDur;
           //ratings
@@ -286,7 +287,7 @@ $(document).ready(function() {
 
 
         $("#review-wrapper").prepend(`
-              <div class="card horizontal">
+              <div class="card-panel teal">
                 <div class="row">
 
                   <div class="col s5 m5 rating-overview">
@@ -312,18 +313,15 @@ $(document).ready(function() {
 
                   <div class="col s7 m7 additional-overview">
                     <div class="row">
-                        <div class="col s8 m8 user-info">
+                        <div class="col s12 m12 user-info">
                           <p>Name: ${name}</p>
                           <p>Unit: ${unit}</p>
                           <p>Lease Duration: ${leaseDur}</p>
                         </div>
-                        <div class="col s4 m4 user-date">
-                          <p>Date Reviewed: ${date}</p>
-                        </div>
                     </div>
 
                     <div class="row">
-                        <div class="col s8 m8 user-comments">
+                        <div class="col s12 m12 user-comments">
                         ${comments}
                         </div>
                     </div>
