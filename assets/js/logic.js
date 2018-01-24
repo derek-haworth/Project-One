@@ -1,4 +1,5 @@
-  $('#modal1').modal();
+$(document).ready(function() {
+    $('#modal1').modal();
 
   // Initialize Firebase
 
@@ -127,7 +128,6 @@
    }
  });
 
-
   // Capture Button Click
   $(".modal-submit").on("click", function(event) {
 
@@ -147,10 +147,10 @@
 
     // Star Ratings
     var review = {
-        name: name,
-        date: date,
-        unit: unit,
-        leaseDur: leaseDur,
+      name: name,
+      date: date,
+      unit: unit,
+      leaseDur: leaseDur,
         // star reviews:
         bldgCondition: vm.bldgCondition,
         water: vm.water,
@@ -167,8 +167,9 @@
       };
 
     // Code for "Setting values in the database"
-    firebase.database().ref([coords] + "/address").set(address);
-    firebase.database().ref([coords] + "/reviews").push(review);
+    firebase.database().ref("apartments/" + [coords] + "/address").set(address);
+    firebase.database().ref("apartments/" + [coords] + "/reviews").push(review);
+
     // firebase.database().ref("apartments/" + [coords] + "/summary").set(summary);
     // firebase.database().ref("apartments/" + [coords] + "/count").set(count);
 
@@ -186,28 +187,19 @@
     var returnArr = [];
 
     snapshot.forEach(function(childSnapshot) {
-        var item = childSnapshot.val();
-        item.key = childSnapshot.key;
+      var item = childSnapshot.val();
+      item.key = childSnapshot.key;
 
-        returnArr.push(item);
+      returnArr.push(item);
     });
 
     return returnArr;
   };
 
-  database.ref().on("child_added", function(childSnapshot) {
-    var apartments = childSnapshot.val();
-  for (o in apartments) {
-    console.log(apartments[o].address);
-    console.log(apartments[o].address.formattedAdress);
-    console.log(apartments[o].reviews);
-    for (x in apartments[o].reviews) {
-      console.log(apartments[o].reviews[x].air);
-    }
-  }
-
     // var childApt = childSnapshotToArray(childSnapshot);
 
+    database.ref().on("child_added", function(childSnapshot) {
+    var apartments = childSnapshot.val();
     // Creating a new map
     var map = new google.maps.Map(document.getElementById("map"), {
       // Default Northwestern Campus
@@ -220,30 +212,56 @@
     var infoWindow = new google.maps.InfoWindow();
     var geocoder = new google.maps.Geocoder();
     // Looping through the Firebase data
-    for (var i = 0, length = childApt.length; i < length; i++) {
-      var data = childApt[i];
+    for (o in apartments) {
       // Retrieve Lat/Lng Coords
-      var latLng = new google.maps.LatLng(data.address.lat, data.address.lng);
+      var latLng = new google.maps.LatLng(apartments[o].address.lat, apartments[o].address.lng);
 
       // Creating a marker and putting it on the map
       var marker = new google.maps.Marker({
         position: latLng,
         map: map,
         icon:  {
-            path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-            scale: 5
-          },
-        title: data.address.formattedAddress
+          path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+          scale: 5
+        },
+        title: apartments[o].address.formattedAddress
       });
 
+
+      var formattedAddress = apartments[o].address.formattedAddress;
+
+      for (x in apartments[o].reviews) {
+          // user info
+          var name = apartments[o].reviews[x].name;
+          var date = apartments[o].reviews[x].date;
+          var unit = apartments[o].reviews[x].unit;
+          var leaseDur = apartments[o].reviews[x].leaseDur;
+          //ratings
+          var air = apartments[o].reviews[x].air;
+          var bldgCondition = apartments[o].reviews[x].bldgCondition;
+          var water = apartments[o].reviews[x].water;
+          var tempReg = apartments[o].reviews[x].tempReg;
+          var cell = apartments[o].reviews[x].cell;
+          var management = apartments[o].reviews[x].management;
+          var pests = apartments[o].reviews[x].pests;
+          var electricity = apartments[o].reviews[x].electricity;
+          var internet = apartments[o].reviews[x].internet;
+          var hiddenFees = apartments[o].reviews[x].hiddenFees;
+          // add'l comments
+          var comments = apartments[o].reviews[x].comments;
+        }
+
+        console.log("HELLO", name, date, unit, leaseDur, air, bldgCondition, water, tempReg, cell, management, pests, electricity, internet, hiddenFees);
+
+
       // Closure
-      (function(marker, data) {
+      (function(marker, apartments) {
         google.maps.event.addListener(marker, "click", function(e) {
-          infoWindow.setContent(`<h5>${data.address.formattedAddress}</h5>`);
+          infoWindow.setContent(`<h5>${marker.title}</h5>`);
           infoWindow.open(map, marker);
 
         });
-      })(marker, data);
+      })(marker, apartments);
 
       // Create an If that determines if address has reviews
       // Populate btns accordingly
@@ -273,7 +291,10 @@
         onOpen: function(el) { }, // A function to be called when sideNav is opened
         onClose: function(el) {  }, // A function to be called when sideNav is closed
       }
-    );
+      );
     // hide sideNav to begin - toggles show
     $('.button-collapse').sideNav('hide');
+});
+
+
 
