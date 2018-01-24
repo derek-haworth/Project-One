@@ -1,4 +1,7 @@
-$(document).ready(function(){
+//$(document).ready(function(){
+
+
+
 
   $('#modal1').modal();
 
@@ -259,4 +262,24 @@ $(document).ready(function(){
     comments = $("#comments").val("");
   });
 
-});
+//});
+
+  ///////////////////////////////////////
+  //drawer stuff
+    // Initialize collapse button
+    $(".button-collapse").sideNav();
+    // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+    //$('.collapsible').collapsible();
+    $('.button-collapse').sideNav({
+        menuWidth: 600, // Default is 300
+        edge: 'left', // Choose the horizontal origin
+        closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+        draggable: true, // Choose whether you can drag to open on touch screens,
+        onOpen: function(el) { }, // A function to be called when sideNav is opened
+        onClose: function(el) {  }, // A function to be called when sideNav is closed
+      }
+    );
+    // hide sideNav to begin - toggles show
+    $('.button-collapse').sideNav('hide');
+
+    /////////////////////////////////////
