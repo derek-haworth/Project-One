@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#modal1').modal();
+  $('#modal1').modal();
 
   // Initialize Firebase
 
@@ -27,7 +27,7 @@ $(document).ready(function() {
   // Create a variable to reference the database.
   var database = firebase.database();
 
-  var btn = '<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Review</a>';
+  var btn = '<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Write a Review</a>';
   var viewBtn = '<a href="#" id="test-button" data-activates="slide-out" class="button-collapse">View</a>'
   
 
@@ -199,7 +199,7 @@ $(document).ready(function() {
     // var childApt = childSnapshotToArray(childSnapshot);
 
     database.ref().on("child_added", function(childSnapshot) {
-    var apartments = childSnapshot.val();
+      var apartments = childSnapshot.val();
     // Creating a new map
     var map = new google.maps.Map(document.getElementById("map"), {
       // Default Northwestern Campus
@@ -251,14 +251,62 @@ $(document).ready(function() {
           var comments = apartments[o].reviews[x].comments;
         }
 
-        console.log("HELLO", name, date, unit, leaseDur, air, bldgCondition, water, tempReg, cell, management, pests, electricity, internet, hiddenFees);
-
 
       // Closure
       (function(marker, apartments) {
         google.maps.event.addListener(marker, "click", function(e) {
-          infoWindow.setContent(`<h5>${marker.title}</h5>`);
+
+          var html = `
+          <div class="row">
+            <div class="col s12 m12">
+              <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">${marker.title}</span>
+                  <p>This building has (# of reviews) reviews.</p>
+                  <br>
+                  <p>${btn}</p>
+                </div>
+              </div>
+            </div> 
+          </div>
+
+          <div class="row">
+            <div id="review-wrapper class="col s12 m12"></div>
+          </div>
+          `;
+
+          infoWindow.setContent(html);
           infoWindow.open(map, marker);
+
+          $("#review-wrapper").prepend(`
+              <div class="card horizontal">
+                <div class="card-image rating-overview">
+                  <div class="row">
+
+                    <div class="col s6 m6">
+                      <p>Overall Building Condition: {{ }}</p>
+                      <p>Water: {{ }}</p>
+                      <p>Temperature Regulation: {{ }}</p>
+                      <p>Air Quality: {{ }}</p>
+                      <p>Property Management: {{ }}</p>
+                    </div>
+
+                    <div class="col s6 m6">
+                      <p>Pests: {{ }}</p>
+                      <p>Electricity: {{ }}</p>
+                      <p>Hidden Fees: {{ }}</p>
+                      <p>Cell reception: {{ }}</p>
+                      <p>Internet: {{ }}</p>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="card-content user-overview">
+                <p>I am a very simple card. I am good at containing small bits of information.</p>
+                </div>
+              </div>
+            `);
 
         });
       })(marker, apartments);
@@ -294,7 +342,7 @@ $(document).ready(function() {
       );
     // hide sideNav to begin - toggles show
     $('.button-collapse').sideNav('hide');
-});
+  });
 
 
 
