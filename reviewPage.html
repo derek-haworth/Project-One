@@ -13,7 +13,7 @@
     <title>Review Page</title>
 </head>
 <body>
-    <nav>
+     <!-- <nav>
         <div class="nav-wrapper">
             <a href="#" class="brand-logo">Logo</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -22,40 +22,84 @@
             <li><a href="collapsible.html">JavaScript</a></li>
             </ul>
         </div>
-    </nav>
+    </nav> -->
 
-    <div id="featured-info"class="row">
-        <div id="featured-buiding-address" class="building-address">
-            <div class="street-number">400 S. Ashland</div>
-            <div class="city">LaGrange</div>
-            <div class="state">IL</div>
-            <div class="zip">60525</div>
-            <div class="review-count">This building has # reviews.</div>
-        </div>
-        <div id="featured-overview-stats" class="overview-stats">
-            <div class="stats"></div>
-            <div class="lease-time">The average lease time at this building is: # years.</div>
-        </div>
-    </div>
-    <div id="review-wrapper">
-        <!-- review row -->
-        <div class="review-row row">
-            <div class="overview-stats overview-stats-left">
-                    <div class="stats"></div>
-                    <div class="lease-time"></div>
+
+    
+
+    <ul id="slide-out" class="side-nav">
+        <div id="featured-info"class="row">
+            <div id="featured-buiding-address" class="building-address">
+                <div class="street-number">400 S. Ashland</div>
+                <div class="city">LaGrange</div>
+                <div class="state">IL</div>
+                <div class="zip">60525</div>
+                <div class="review-count">This building has # reviews.</div>
             </div>
-            <div class="comments comments-right">
-            </div>             
-        </div>
-        <!-- review row -->
-        <div class="review-row row">
-            <div class="overview-stats overview-stats-left">
-                    <div class="stats"></div>
-                    <div class="lease-time"></div>
+            <div id="featured-overview-stats" class="overview-stats">
+                <div class="stats"></div>
+                <div class="lease-time">The average lease time at this building is: # years.</div>
             </div>
-            <div class="comments comments-right">
-            </div>             
         </div>
-    </div>
+        <div id="review-wrapper">
+            <!-- review row -->
+            <div class="review-row row">
+                <div class="overview-stats overview-stats-left">
+                        <div class="stats"></div>
+                        <div class="lease-time"></div>
+                </div>
+                <div class="comments comments-right">
+                </div>             
+            </div>
+            <!-- review row -->
+            <div class="review-row row">
+                <div class="overview-stats overview-stats-left">
+                        <div class="stats"></div>
+                        <div class="lease-time"></div>
+                </div>
+                <div class="comments comments-right">
+                </div>             
+            </div>
+        </div>
+    </ul>
+
+    <a href="#" id="test-button" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+
+
+      
 </body>
+<!-- jQuery CDN -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- jQuery UI CDN -->				
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script> 
+<!-- Link to Materialize.js -->
+<script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
+ <!-- Link to vue.js -->
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script>
+
+<!-- Modal JavaScript -->
 </html>
+
+<script>
+  // Initialize collapse button
+  $(".button-collapse").sideNav();
+  // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+  //$('.collapsible').collapsible();
+
+  $('.button-collapse').sideNav({
+      menuWidth: 600, // Default is 300
+      edge: 'left', // Choose the horizontal origin
+      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+      draggable: true, // Choose whether you can drag to open on touch screens,
+      onOpen: function(el) { }, // A function to be called when sideNav is opened
+      onClose: function(el) {  }, // A function to be called when sideNav is closed
+    }
+  );
+
+  // Show sideNav
+  $('.button-collapse').sideNav('show');
+
+     
+
+</script>
