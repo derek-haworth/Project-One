@@ -167,8 +167,8 @@
       };
 
     // Code for "Setting values in the database"
-    firebase.database().ref("apartments/" + [coords] + "/address").set(address);
-    firebase.database().ref("apartments/" + [coords] + "/reviews").push(review);
+    firebase.database().ref([coords] + "/address").set(address);
+    firebase.database().ref([coords] + "/reviews").push(review);
     // firebase.database().ref("apartments/" + [coords] + "/summary").set(summary);
     // firebase.database().ref("apartments/" + [coords] + "/count").set(count);
 
@@ -196,8 +196,17 @@
   };
 
   database.ref().on("child_added", function(childSnapshot) {
+    var apartments = childSnapshot.val();
+  for (o in apartments) {
+    console.log(apartments[o].address);
+    console.log(apartments[o].address.formattedAdress);
+    console.log(apartments[o].reviews);
+    for (x in apartments[o].reviews) {
+      console.log(apartments[o].reviews[x].air);
+    }
+  }
 
-    var childApt = childSnapshotToArray(childSnapshot);
+    // var childApt = childSnapshotToArray(childSnapshot);
 
     // Creating a new map
     var map = new google.maps.Map(document.getElementById("map"), {
@@ -210,7 +219,6 @@
     // Creating a global infoWindow object that will be reused by all markers
     var infoWindow = new google.maps.InfoWindow();
     var geocoder = new google.maps.Geocoder();
-
     // Looping through the Firebase data
     for (var i = 0, length = childApt.length; i < length; i++) {
       var data = childApt[i];
@@ -233,6 +241,7 @@
         google.maps.event.addListener(marker, "click", function(e) {
           infoWindow.setContent(`<h5>${data.address.formattedAddress}</h5>`);
           infoWindow.open(map, marker);
+
         });
       })(marker, data);
 
