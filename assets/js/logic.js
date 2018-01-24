@@ -50,6 +50,7 @@ $(document).ready(function(){
 
 
   var coords;
+  var formattedAddress;
 
   //latitude-longitude
   // var latLong = coords;  //hard coded for now
@@ -133,6 +134,7 @@ $(document).ready(function(){
 
     geocoder.geocode({'address': address}, function(results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
+        console.log(results[0]);
         // Get Lat/Lng from Address
         var loc = [];
         loc[0] = results[0].geometry.location.lat();
@@ -240,6 +242,7 @@ $(document).ready(function(){
 
     // Code for "Setting values in the database"
     // database.ref('/data.name').push(apartments);
+    firebase.database().ref([coords]+ "/address").set(formattedAddress);
     firebase.database().ref([coords]+ "/reviews").push(review);
     firebase.database().ref([coords]+ "/summary").set(summary);
     firebase.database().ref([coords]+ "/count").set(count);
