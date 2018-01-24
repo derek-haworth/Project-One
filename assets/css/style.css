@@ -109,7 +109,7 @@ h1 span.logo-text {
         color: #fff;
     }
     #featured-info{
-        height:250px;
+        height:175px;
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); 
         display:block;
         position:relative;
@@ -121,7 +121,7 @@ h1 span.logo-text {
     #featured-buiding-address {
         display:block;
         float:left;
-        height:250px;
+        height:175px;
         width:55%;
         padding:25px;
         background-color: #9AB9BE;
@@ -133,7 +133,7 @@ h1 span.logo-text {
     #featured-overview-stats {
         display:block;
         float:left;
-        height:250px;
+        height:175px;
         width:45%;
         padding:25px;
         background-color: #CAE6A3;  
