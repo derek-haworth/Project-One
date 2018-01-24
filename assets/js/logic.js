@@ -86,7 +86,6 @@ $(document).ready(function(){
 
     geocoder.geocode({'address': address}, function(results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
-
         // Get Lat/Lng from Address
         loc[0] = results[0].geometry.location.lat();
         loc[1] = results[0].geometry.location.lng();
@@ -213,8 +212,8 @@ $(document).ready(function(){
     return returnArr;
   };
   database.ref().on("child_added", function(childSnapshot) {
-    debugger;
-    // console.log(childSnapshotToArray(childSnapshot));
+    console.log(childSnapshotToArray(childSnapshot));
+    var childApt = childSnapshotToArray(childSnapshot);
 
 
     // Creating a new map
@@ -230,20 +229,21 @@ $(document).ready(function(){
     var geocoder = new google.maps.Geocoder();
 
     // Looping through the Firebase data
-    for (var i = 0, length = json.length; i < length; i++) {
-      var data = json[i],
-        latLng = new google.maps.LatLng(data.lat, data.lng);
+    for (var i = 0, length = childApt.length; i < length; i++) {
+      debugger;
+      var data = childApt[i],
+        latLng = new google.maps.LatLng(data.address.lat, data.address.lng);
 
       // Creating a marker and putting it on the map
       var marker = new google.maps.Marker({
         position: latLng,
         map: map,
-        title: data.title
+        title: data.address.formattedAddress
       });
 
       (function(marker, data) {
         google.maps.event.addListener(marker, "click", function(e) {
-          infoWindow.setContent(data.description);
+          infoWindow.setContent(data.address.formattedAddress);
           infoWindow.open(map, marker);
         });
       })(marker, data);
