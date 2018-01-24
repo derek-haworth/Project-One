@@ -215,6 +215,8 @@ $(document).ready(function() {
 
     // Looping through the Firebase data
     for (o in apartments) {
+      debugger;
+
       // Retrieve Lat/Lng Coords
       var latLng = new google.maps.LatLng(apartments[o].address.lat, apartments[o].address.lng);
 
@@ -234,6 +236,33 @@ $(document).ready(function() {
       // Closure
       (function(marker, apartments) {
         google.maps.event.addListener(marker, "click", function(e) {
+      
+        var html = `
+          <div class="row">
+            <div class="col s12 m12">
+              <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">${marker.title}</span>
+                  <p>This building has (# of reviews) reviews.</p>
+                  <br>
+                  <p>${btn}</p>
+                </div>
+              </div>
+            </div> 
+          </div>
+
+          <div class="row">
+            <div id="review-wrapper" class="col s12 m12">
+            </div>
+          </div>
+          `;
+
+
+          infoWindow.setContent(html);
+          infoWindow.open(map, marker);
+
+        var formattedAddress = apartments[o].address.formattedAddress;
+
         for (x in apartments[o].reviews) {
           debugger;
           // user info
@@ -260,7 +289,7 @@ $(document).ready(function() {
               <div class="card horizontal">
                 <div class="row">
 
-                  <div class="col s4 m4 rating-overview">
+                  <div class="col s5 m5 rating-overview">
                     <div class="row">
                       <div class="col s6 m6">
                         <p>Overall Building Condition:${bldgCondition}</p>
@@ -281,7 +310,7 @@ $(document).ready(function() {
                   </div>
 
 
-                  <div class="col s4 m4 additional-overview">
+                  <div class="col s7 m7 additional-overview">
                     <div class="row">
                         <div class="col s8 m8 user-info">
                           <p>Name: ${name}</p>
@@ -303,79 +332,9 @@ $(document).ready(function() {
                 </div>
               </div>
             `);
-      }
-      
-          var html = `
-          <div class="row">
-            <div class="col s12 m12">
-              <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                  <span class="card-title">${marker.title}</span>
-                  <p>This building has (# of reviews) reviews.</p>
-                  <br>
-                  <p>${btn}</p>
-                </div>
-              </div>
-            </div> 
-          </div>
-
-          <div class="row">
-            <div id="review-wrapper" class="col s12 m12">
-            <div class="card horizontal">
-                <div class="row">
-
-                  <div class="col s4 m4 rating-overview">
-                    <div class="row">
-                      <div class="col s6 m6">
-                        <p>Overall Building Condition:${bldgCondition}</p>
-                        <p>Water: ${water}</p>
-                        <p>Temperature Regulation: ${tempReg}</p>
-                        <p>Air Quality: ${air}</p>
-                        <p>Property Management: ${management}</p>
-                      </div>
-
-                      <div class="col s6 m6">
-                        <p>Pests: ${pests}</p>
-                        <p>Electricity: ${electricity}</p>
-                        <p>Hidden Fees: ${hiddenFees}</p>
-                        <p>Cell reception: ${cell}</p>
-                        <p>Internet: ${internet}</p>
-                      </div>
-                    </div>
-                  </div>
-
-
-                  <div class="col s4 m4 additional-overview">
-                    <div class="row">
-                        <div class="col s8 m8 user-info">
-                          <p>Name: ${name}</p>
-                          <p>Unit: ${unit}</p>
-                          <p>Lease Duration: ${leaseDur}</p>
-                        </div>
-                        <div class="col s4 m4 user-date">
-                          <p>Date Reviewed: ${date}</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col s8 m8 user-comments">
-                        ${comments}
-                        </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div></div>
-          </div>
-          `;
-
-          infoWindow.setContent(html);
-          infoWindow.open(map, marker);
+          }
         });
       })(marker, apartments);
-
-
-      var formattedAddress = apartments[o].address.formattedAddress;
 
       
       // Create an If that determines if address has reviews
