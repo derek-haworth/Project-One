@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#modal1').modal();
+  $('#modal1').modal();
 
   // Initialize Firebase
 
@@ -27,7 +27,7 @@ $(document).ready(function() {
   // Create a variable to reference the database.
   var database = firebase.database();
 
-  var btn = '<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Review</a>';
+  var btn = '<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Write a Review</a>';
   var viewBtn = '<a href="#" id="test-button" data-activates="slide-out" class="button-collapse">View</a>'
   
 
@@ -199,7 +199,7 @@ $(document).ready(function() {
     // var childApt = childSnapshotToArray(childSnapshot);
 
     database.ref().on("child_added", function(childSnapshot) {
-    var apartments = childSnapshot.val();
+      var apartments = childSnapshot.val();
     // Creating a new map
     var map = new google.maps.Map(document.getElementById("map"), {
       // Default Northwestern Campus
@@ -211,8 +211,12 @@ $(document).ready(function() {
     // Creating a global infoWindow object that will be reused by all markers
     var infoWindow = new google.maps.InfoWindow();
     var geocoder = new google.maps.Geocoder();
+
+
     // Looping through the Firebase data
     for (o in apartments) {
+      debugger;
+
       // Retrieve Lat/Lng Coords
       var latLng = new google.maps.LatLng(apartments[o].address.lat, apartments[o].address.lng);
 
@@ -228,9 +232,39 @@ $(document).ready(function() {
       });
 
 
-      var formattedAddress = apartments[o].address.formattedAddress;
 
-      for (x in apartments[o].reviews) {
+      // Closure
+      (function(marker, apartments) {
+        google.maps.event.addListener(marker, "click", function(e) {
+      
+        var html = `
+          <div class="row">
+            <div class="col s12 m12">
+              <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">${marker.title}</span>
+                  <p>This building has (# of reviews) reviews.</p>
+                  <br>
+                  <p>${btn}</p>
+                </div>
+              </div>
+            </div> 
+          </div>
+
+          <div class="row">
+            <div id="review-wrapper" class="col s12 m12">
+            </div>
+          </div>
+          `;
+
+
+          infoWindow.setContent(html);
+          infoWindow.open(map, marker);
+
+        var formattedAddress = apartments[o].address.formattedAddress;
+
+        for (x in apartments[o].reviews) {
+          debugger;
           // user info
           var name = apartments[o].reviews[x].name;
           var date = apartments[o].reviews[x].date;
@@ -249,24 +283,65 @@ $(document).ready(function() {
           var hiddenFees = apartments[o].reviews[x].hiddenFees;
           // add'l comments
           var comments = apartments[o].reviews[x].comments;
-        }
-
-        console.log("HELLO", name, date, unit, leaseDur, air, bldgCondition, water, tempReg, cell, management, pests, electricity, internet, hiddenFees);
 
 
-      // Closure
-      (function(marker, apartments) {
-        google.maps.event.addListener(marker, "click", function(e) {
-          infoWindow.setContent(`<h5>${marker.title}</h5>`);
-          infoWindow.open(map, marker);
+        $("#review-wrapper").prepend(`
+              <div class="card horizontal">
+                <div class="row">
 
+                  <div class="col s5 m5 rating-overview">
+                    <div class="row">
+                      <div class="col s6 m6">
+                        <p>Overall Building Condition:${bldgCondition}</p>
+                        <p>Water: ${water}</p>
+                        <p>Temperature Regulation: ${tempReg}</p>
+                        <p>Air Quality: ${air}</p>
+                        <p>Property Management: ${management}</p>
+                      </div>
+
+                      <div class="col s6 m6">
+                        <p>Pests: ${pests}</p>
+                        <p>Electricity: ${electricity}</p>
+                        <p>Hidden Fees: ${hiddenFees}</p>
+                        <p>Cell reception: ${cell}</p>
+                        <p>Internet: ${internet}</p>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col s7 m7 additional-overview">
+                    <div class="row">
+                        <div class="col s8 m8 user-info">
+                          <p>Name: ${name}</p>
+                          <p>Unit: ${unit}</p>
+                          <p>Lease Duration: ${leaseDur}</p>
+                        </div>
+                        <div class="col s4 m4 user-date">
+                          <p>Date Reviewed: ${date}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s8 m8 user-comments">
+                        ${comments}
+                        </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            `);
+          }
         });
       })(marker, apartments);
 
+      
       // Create an If that determines if address has reviews
       // Populate btns accordingly
 
       // Loop through reviews within apartments loop
+
     }
 
     $('#search').keypress(function(event){
@@ -294,7 +369,7 @@ $(document).ready(function() {
       );
     // hide sideNav to begin - toggles show
     $('.button-collapse').sideNav('hide');
-});
+  });
 
 
 
