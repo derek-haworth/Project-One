@@ -143,6 +143,7 @@ $(document).ready(function(){
         var x = loc.join();
         var y = x.replace(/\./g,'^');
         coords = y.replace(/\,/g,'_');
+        formattedAddress = results[0].formatted_address;
 
         resultsMap.setCenter(results[0].geometry.location);
         var infowindow = new google.maps.InfoWindow;
@@ -211,6 +212,10 @@ $(document).ready(function(){
     unit = $("#unit").val().trim();
     leaseDur = $("#lease-duration").val();
     comments = $("#comments").val().trim();
+
+    var address = {
+      formattedAddress: formattedAddress;
+    } 
 
     // Star Ratings
     var review = {
