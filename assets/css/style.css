@@ -94,29 +94,35 @@ h1 span.logo-text {
 
 /* Review Modal */
 .comment-section {
-	margin-top: 40px;
+    margin-top: 40px;
 }
 
 @media (min-width: 450px){
 
-    nav  {
-        z-index: 10000;
-        position:absolute;
+   
+    #test-button{
+        right: 0px;
+        top: 0px;
+        position: absolute;
+        font-size: 40px;
+        z-index: 99999999999;
+        color: #000;
     }
-    #featured-info  {
-        height:250px;
+    #featured-info{
+        height:175px;
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); 
         display:block;
         position:relative;
-        top:64px;
+        /* top:64px; */
         left:0;
         z-index:99;  
+        margin-bottom: 0px;
     }
     #featured-buiding-address {
         display:block;
         float:left;
-        height:250px;
-        width:66.66vw;
+        height:175px;
+        width:55%;
         padding:25px;
         background-color: #9AB9BE;
         position:relative;
@@ -127,43 +133,46 @@ h1 span.logo-text {
     #featured-overview-stats {
         display:block;
         float:left;
-        height:250px;
-        width:33.33vw;
+        height:175px;
+        width:45%;
         padding:25px;
         background-color: #CAE6A3;  
         position: relative;
         top: 0px;
         right: 0px; 
     }
-    #review-wrapper {
+    #review-wrapper{
         height:auto;
-        width:100vw;
+        width:100%;
         min-height:200px;
         display:block;
         float:left;
         position:relative;
-        margin-top:44px;
+        /* margin-top:44px; */
         z-index:0;
     }
-    .review-row {
+    .review-row{
         height:200px;
-        width:100vw;
+        width:100%;
         display:block;
         float:left;
         margin-bottom:0px;
     }
+
     .overview-stats-left {
         background-color: #F4F4F4;
         height:200px;
-        width:25vw;
+        width:33.33%;
         display:block;
         float:left;
         border-bottom: 1px solid rgba(0,0,0,.1);
-    }    
+    }
+
+    
     .comments-right {
         background-color: #fff;
         height:200px;
-        width:75vw;
+        width:66.66%;
         display:block;
         float:left;
         border-bottom: 1px solid rgba(0,0,0,.1);
