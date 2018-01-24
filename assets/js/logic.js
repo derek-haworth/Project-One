@@ -259,4 +259,30 @@ $(document).ready(function(){
     comments = $("#comments").val("");
   });
 
+
+  // POPULATE REVIEW PAGE!!!
+  // Firebase watcher + initial loader HINT: This code behaves similarly to .on("value")
+ database.ref().on("child_added", function(snapshot) {
+
+    // Log everything that's coming out of snapshot
+    console.log(snapshot.val());
+
+    // Featured info
+    $(".formatted-address").text(snapshot.val().name);
+    $(".review-count").text("This building has " + /* reviews.length */ + " reviews.");
+
+    // Featured overview stats
+    $(".lease-time").text("The average lease time at this building is " + /* average lease length */ + " years.");
+
+    $("#review-wrapper").append(
+        '<div class="review-row row"><div class="overview-stats overview-stats-left"><div class="stats"></div><div class="lease-time"></div></div><div class="comments comments-right"></div></div>'
+      );
+
+
+
+  // Handle the errors
+  }, function(errorObject) {
+    console.log("Errors handled: " + errorObject.code);
+  });
+
 });
