@@ -3,24 +3,26 @@ $(document).ready(function(){
   $('#modal1').modal();
 
   // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAJCyPmkk2azsrA9HMVCBCRH9g4dO70H9o",
-    authDomain: "project-one-maps.firebaseapp.com",
-    databaseURL: "https://project-one-maps.firebaseio.com",
-    projectId: "project-one-maps",
-    storageBucket: "project-one-maps.appspot.com",
-    messagingSenderId: "735214191875"
-  };
+
+  // Derek Firebase
+  // var config = {
+  //   apiKey: "AIzaSyAJCyPmkk2azsrA9HMVCBCRH9g4dO70H9o",
+  //   authDomain: "project-one-maps.firebaseapp.com",
+  //   databaseURL: "https://project-one-maps.firebaseio.com",
+  //   projectId: "project-one-maps",
+  //   storageBucket: "project-one-maps.appspot.com",
+  //   messagingSenderId: "735214191875"
+  // };
 
 // Initialize Firebase
-  // var config = {
-  //   apiKey: "AIzaSyCA3PWKYA42bM2Tz7ofOY72jOI2QdtH5gM",
-  //   authDomain: "apartmentyelp.firebaseapp.com",
-  //   databaseURL: "https://apartmentyelp.firebaseio.com",
-  //   projectId: "apartmentyelp",
-  //   storageBucket: "apartmentyelp.appspot.com",
-  //   messagingSenderId: "339519487350"
-  // };
+  var config = {
+    apiKey: "AIzaSyCA3PWKYA42bM2Tz7ofOY72jOI2QdtH5gM",
+    authDomain: "apartmentyelp.firebaseapp.com",
+    databaseURL: "https://apartmentyelp.firebaseio.com",
+    projectId: "apartmentyelp",
+    storageBucket: "apartmentyelp.appspot.com",
+    messagingSenderId: "339519487350"
+  };
 
   firebase.initializeApp(config);
 
