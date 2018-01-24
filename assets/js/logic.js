@@ -5,24 +5,24 @@ $(document).ready(function(){
   // Initialize Firebase
 
   // Derek Firebase
-  // var config = {
-  //   apiKey: "AIzaSyAJCyPmkk2azsrA9HMVCBCRH9g4dO70H9o",
-  //   authDomain: "project-one-maps.firebaseapp.com",
-  //   databaseURL: "https://project-one-maps.firebaseio.com",
-  //   projectId: "project-one-maps",
-  //   storageBucket: "project-one-maps.appspot.com",
-  //   messagingSenderId: "735214191875"
-  // };
+  var config = {
+    apiKey: "AIzaSyAJCyPmkk2azsrA9HMVCBCRH9g4dO70H9o",
+    authDomain: "project-one-maps.firebaseapp.com",
+    databaseURL: "https://project-one-maps.firebaseio.com",
+    projectId: "project-one-maps",
+    storageBucket: "project-one-maps.appspot.com",
+    messagingSenderId: "735214191875"
+  };
 
 // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyCA3PWKYA42bM2Tz7ofOY72jOI2QdtH5gM",
-    authDomain: "apartmentyelp.firebaseapp.com",
-    databaseURL: "https://apartmentyelp.firebaseio.com",
-    projectId: "apartmentyelp",
-    storageBucket: "apartmentyelp.appspot.com",
-    messagingSenderId: "339519487350"
-  };
+  // var config = {
+  //   apiKey: "AIzaSyCA3PWKYA42bM2Tz7ofOY72jOI2QdtH5gM",
+  //   authDomain: "apartmentyelp.firebaseapp.com",
+  //   databaseURL: "https://apartmentyelp.firebaseio.com",
+  //   projectId: "apartmentyelp",
+  //   storageBucket: "apartmentyelp.appspot.com",
+  //   messagingSenderId: "339519487350"
+  // };
 
   firebase.initializeApp(config);
 
@@ -48,15 +48,13 @@ $(document).ready(function(){
 
   ]
 
-
+  // Initial Values
+  var loc = [];
   var coords;
+  var lat;
+  var lng;
   var formattedAddress;
 
-  //latitude-longitude
-  // var latLong = coords;  //hard coded for now
-  // var latLong = "41^8781_-87^6297";
-
-  // Initial Values
   var count = 0;
   var newReview = { };
   var name = "";
@@ -81,52 +79,6 @@ $(document).ready(function(){
   var comments = "";
 
 
-  database.ref().on("child_added", function(childSnapshot) {
-    // console.log(childSnapshot.val());
-
-    // Creating a new map
-    var map = new google.maps.Map(document.getElementById("map"), {
-      // Default Northwestern Campus
-      center: new google.maps.LatLng(41.896601, -87.618751),
-      zoom: 16,
-      styles: mapStyles
-    });
-
-    // Creating a global infoWindow object that will be reused by all markers
-    var infoWindow = new google.maps.InfoWindow();
-    var geocoder = new google.maps.Geocoder();
-
-    // Looping through the Firebase data
-    for (var i = 0, length = json.length; i < length; i++) {
-      var data = json[i],
-        latLng = new google.maps.LatLng(data.lat, data.lng);
-
-      // Creating a marker and putting it on the map
-      var marker = new google.maps.Marker({
-        position: latLng,
-        map: map,
-        title: data.title
-      });
-
-      (function(marker, data) {
-        google.maps.event.addListener(marker, "click", function(e) {
-          infoWindow.setContent(data.description);
-          infoWindow.open(map, marker);
-        });
-      })(marker, data);
-
-    }
-
-    $('#search').keypress(function(event){
-      var keycode = (event.keyCode ? event.keyCode : event.which);
-      if(keycode == '13'){
-        geocodeAddress(geocoder, map);
-      }    
-    });
-
-  });
-
-
   function geocodeAddress(geocoder, resultsMap) {
 
     var address = document.getElementById('search').value;
@@ -134,15 +86,17 @@ $(document).ready(function(){
 
     geocoder.geocode({'address': address}, function(results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
-        console.log(results[0]);
+
         // Get Lat/Lng from Address
-        var loc = [];
         loc[0] = results[0].geometry.location.lat();
         loc[1] = results[0].geometry.location.lng();
-        debugger;
         var x = loc.join();
         var y = x.replace(/\./g,'^');
         coords = y.replace(/\,/g,'_');
+        lat = loc[0];
+        lng = loc[1];
+
+        // Get Pretty Address
         formattedAddress = results[0].formatted_address;
 
         resultsMap.setCenter(results[0].geometry.location);
@@ -161,14 +115,6 @@ $(document).ready(function(){
       }
     });
   }
-
-
-  function display(long_lat){
-    var x = long_lat.join();
-    var y = x.replace(/\./g,'^');
-    coords = y.replace(/\,/g,'_');
-  }
-
 
 
   //Vue stuff
@@ -214,7 +160,9 @@ $(document).ready(function(){
     comments = $("#comments").val().trim();
 
     var address = {
-      formattedAddress: formattedAddress
+      formattedAddress: formattedAddress,
+      lat: lat,
+      lng: lng
     } 
 
     // Star Ratings
@@ -238,25 +186,77 @@ $(document).ready(function(){
         comments: comments
       };
 
-      var summary = {
-        "stuff" : "stuff", //more coming soon
-      }
-
-      var count = 4;
-
-
     // Code for "Setting values in the database"
     // database.ref('/data.name').push(apartments);
-    firebase.database().ref([coords]+ "/address").set(formattedAddress);
-    firebase.database().ref([coords]+ "/reviews").push(review);
-    firebase.database().ref([coords]+ "/summary").set(summary);
-    firebase.database().ref([coords]+ "/count").set(count);
+    firebase.database().ref("apartments/" + [coords] + "/address").set(address);
+    firebase.database().ref("apartments/" + [coords] + "/reviews").push(review);
+    // firebase.database().ref("apartments/" + [coords] + "/summary").set(summary);
+    // firebase.database().ref("apartments/" + [coords] + "/count").set(count);
 
     //clear out the fields after submitting
     name = $("#name").val("");
     unit = $("#unit").val("");
     leaseDur = $("#lease-duration").val("");
     comments = $("#comments").val("");
+  });
+
+  function childSnapshotToArray(snapshot) {
+    var returnArr = [];
+
+    snapshot.forEach(function(childSnapshot) {
+        var item = childSnapshot.val();
+        item.key = childSnapshot.key;
+
+        returnArr.push(item);
+    });
+
+    return returnArr;
+  };
+  database.ref().on("child_added", function(childSnapshot) {
+    debugger;
+    // console.log(childSnapshotToArray(childSnapshot));
+
+
+    // Creating a new map
+    var map = new google.maps.Map(document.getElementById("map"), {
+      // Default Northwestern Campus
+      center: new google.maps.LatLng(41.896601, -87.618751),
+      zoom: 16,
+      styles: mapStyles
+    });
+
+    // Creating a global infoWindow object that will be reused by all markers
+    var infoWindow = new google.maps.InfoWindow();
+    var geocoder = new google.maps.Geocoder();
+
+    // Looping through the Firebase data
+    for (var i = 0, length = json.length; i < length; i++) {
+      var data = json[i],
+        latLng = new google.maps.LatLng(data.lat, data.lng);
+
+      // Creating a marker and putting it on the map
+      var marker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        title: data.title
+      });
+
+      (function(marker, data) {
+        google.maps.event.addListener(marker, "click", function(e) {
+          infoWindow.setContent(data.description);
+          infoWindow.open(map, marker);
+        });
+      })(marker, data);
+
+    }
+
+    $('#search').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        geocodeAddress(geocoder, map);
+      }    
+    });
+
   });
 
 });
