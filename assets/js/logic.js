@@ -15,16 +15,16 @@ $(document).ready(function(){
   // };
 
 // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyCA3PWKYA42bM2Tz7ofOY72jOI2QdtH5gM",
-    authDomain: "apartmentyelp.firebaseapp.com",
-    databaseURL: "https://apartmentyelp.firebaseio.com",
-    projectId: "apartmentyelp",
-    storageBucket: "apartmentyelp.appspot.com",
-    messagingSenderId: "339519487350"
-  };
+var config = {
+  apiKey: "AIzaSyCA3PWKYA42bM2Tz7ofOY72jOI2QdtH5gM",
+  authDomain: "apartmentyelp.firebaseapp.com",
+  databaseURL: "https://apartmentyelp.firebaseio.com",
+  projectId: "apartmentyelp",
+  storageBucket: "apartmentyelp.appspot.com",
+  messagingSenderId: "339519487350"
+};
 
-  firebase.initializeApp(config);
+firebase.initializeApp(config);
 
   // Create a variable to reference the database.
   var database = firebase.database();
@@ -99,7 +99,7 @@ $(document).ready(function(){
     // Looping through the Firebase data
     for (var i = 0, length = json.length; i < length; i++) {
       var data = json[i],
-        latLng = new google.maps.LatLng(data.lat, data.lng);
+      latLng = new google.maps.LatLng(data.lat, data.lng);
 
       // Creating a marker and putting it on the map
       var marker = new google.maps.Marker({
@@ -219,10 +219,10 @@ $(document).ready(function(){
 
     // Star Ratings
     var review = {
-        name: name,
-        date: date,
-        unit: unit,
-        leaseDur: leaseDur,
+      name: name,
+      date: date,
+      unit: unit,
+      leaseDur: leaseDur,
         // star reviews:
         bldgCondition: vm.bldgCondition,
         water: vm.water,
@@ -262,10 +262,11 @@ $(document).ready(function(){
 
   // POPULATE REVIEW PAGE!!!
   // Firebase watcher + initial loader HINT: This code behaves similarly to .on("value")
- database.ref().on("child_added", function(snapshot) {
+  database.ref().on("child_added", function(childSnapshot) {
+    var snapshot = snapshot.val();
 
     // Log everything that's coming out of snapshot
-    console.log(snapshot.val());
+    console.log(snapshot);
 
     // Featured info
     $(".formatted-address").text(snapshot.val().name);
@@ -275,14 +276,36 @@ $(document).ready(function(){
     $(".lease-time").text("The average lease time at this building is " + /* average lease length */ + " years.");
 
     $("#review-wrapper").append(
-        '<div class="review-row row"><div class="overview-stats overview-stats-left"><div class="stats"></div><div class="lease-time"></div></div><div class="comments comments-right"></div></div>'
+      '<div class="review-row row"><div class="overview-stats overview-stats-left"><div class="stats"></div><div class="lease-time"></div></div><div class="comments comments-right"></div></div>'
       );
+
+    for (o in apartments) {
+      childSnapshot.val()
+      console.log(apartments[o].address);
+      console.log(apartments[o].address.formattedAddress);
+      console.log(apartments[o].reviews);
+      for (x in apartments[o].reviews) {
+        console.log(apartments[o].reviews[x].air);
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
   // Handle the errors
-  }, function(errorObject) {
-    console.log("Errors handled: " + errorObject.code);
-  });
+}, function(errorObject) {
+  console.log("Errors handled: " + errorObject.code);
+});
 
 });
