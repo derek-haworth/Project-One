@@ -280,30 +280,48 @@ $(document).ready(function() {
 
           $("#review-wrapper").prepend(`
               <div class="card horizontal">
-                <div class="card-image rating-overview">
-                  <div class="row">
+                <div class="row">
 
-                    <div class="col s6 m6">
-                      <p>Overall Building Condition: {{ }}</p>
-                      <p>Water: {{ }}</p>
-                      <p>Temperature Regulation: {{ }}</p>
-                      <p>Air Quality: {{ }}</p>
-                      <p>Property Management: {{ }}</p>
+                  <div class="col s4 m4 rating-overview">
+                    <div class="row">
+                      <div class="col s6 m6">
+                        <p>Overall Building Condition: {{ }}</p>
+                        <p>Water: {{ }}</p>
+                        <p>Temperature Regulation: {{ }}</p>
+                        <p>Air Quality: {{ }}</p>
+                        <p>Property Management: {{ }}</p>
+                      </div>
+
+                      <div class="col s6 m6">
+                        <p>Pests: {{ }}</p>
+                        <p>Electricity: {{ }}</p>
+                        <p>Hidden Fees: {{ }}</p>
+                        <p>Cell reception: {{ }}</p>
+                        <p>Internet: {{ }}</p>
+                      </div>
                     </div>
-
-                    <div class="col s6 m6">
-                      <p>Pests: {{ }}</p>
-                      <p>Electricity: {{ }}</p>
-                      <p>Hidden Fees: {{ }}</p>
-                      <p>Cell reception: {{ }}</p>
-                      <p>Internet: {{ }}</p>
-                    </div>
-
                   </div>
-                </div>
 
-                <div class="card-content user-overview">
-                <p>I am a very simple card. I am good at containing small bits of information.</p>
+
+                  <div class="col s4 m4 additional-overview">
+                    <div class="row">
+                        <div class="col s8 m8 user-info">
+                          <p>Name: {{ }}</p>
+                          <p>Unit: {{ }}</p>
+                          <p>Lease Duration: {{ }}</p>
+                        </div>
+                        <div class="col s4 m4 user-date">
+                          <p>Date Reviewed: {{ }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s8 m8 user-comments">
+                        {{Additional Comments}}
+                        </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             `);
