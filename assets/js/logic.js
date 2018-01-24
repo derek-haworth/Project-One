@@ -211,6 +211,8 @@ $(document).ready(function() {
     // Creating a global infoWindow object that will be reused by all markers
     var infoWindow = new google.maps.InfoWindow();
     var geocoder = new google.maps.Geocoder();
+
+
     // Looping through the Firebase data
     for (o in apartments) {
       // Retrieve Lat/Lng Coords
@@ -228,9 +230,12 @@ $(document).ready(function() {
       });
 
 
-      var formattedAddress = apartments[o].address.formattedAddress;
 
-      for (x in apartments[o].reviews) {
+      // Closure
+      (function(marker, apartments) {
+        google.maps.event.addListener(marker, "click", function(e) {
+        for (x in apartments[o].reviews) {
+          debugger;
           // user info
           var name = apartments[o].reviews[x].name;
           var date = apartments[o].reviews[x].date;
@@ -249,13 +254,57 @@ $(document).ready(function() {
           var hiddenFees = apartments[o].reviews[x].hiddenFees;
           // add'l comments
           var comments = apartments[o].reviews[x].comments;
-        }
 
 
-      // Closure
-      (function(marker, apartments) {
-        google.maps.event.addListener(marker, "click", function(e) {
+        $("#review-wrapper").prepend(`
+              <div class="card horizontal">
+                <div class="row">
 
+                  <div class="col s4 m4 rating-overview">
+                    <div class="row">
+                      <div class="col s6 m6">
+                        <p>Overall Building Condition:${bldgCondition}</p>
+                        <p>Water: ${water}</p>
+                        <p>Temperature Regulation: ${tempReg}</p>
+                        <p>Air Quality: ${air}</p>
+                        <p>Property Management: ${management}</p>
+                      </div>
+
+                      <div class="col s6 m6">
+                        <p>Pests: ${pests}</p>
+                        <p>Electricity: ${electricity}</p>
+                        <p>Hidden Fees: ${hiddenFees}</p>
+                        <p>Cell reception: ${cell}</p>
+                        <p>Internet: ${internet}</p>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col s4 m4 additional-overview">
+                    <div class="row">
+                        <div class="col s8 m8 user-info">
+                          <p>Name: ${name}</p>
+                          <p>Unit: ${unit}</p>
+                          <p>Lease Duration: ${leaseDur}</p>
+                        </div>
+                        <div class="col s4 m4 user-date">
+                          <p>Date Reviewed: ${date}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s8 m8 user-comments">
+                        ${comments}
+                        </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            `);
+      }
+      
           var html = `
           <div class="row">
             <div class="col s12 m12">
@@ -271,33 +320,26 @@ $(document).ready(function() {
           </div>
 
           <div class="row">
-            <div id="review-wrapper class="col s12 m12"></div>
-          </div>
-          `;
-
-          infoWindow.setContent(html);
-          infoWindow.open(map, marker);
-
-          $("#review-wrapper").prepend(`
-              <div class="card horizontal">
+            <div id="review-wrapper" class="col s12 m12">
+            <div class="card horizontal">
                 <div class="row">
 
                   <div class="col s4 m4 rating-overview">
                     <div class="row">
                       <div class="col s6 m6">
-                        <p>Overall Building Condition: {{ }}</p>
-                        <p>Water: {{ }}</p>
-                        <p>Temperature Regulation: {{ }}</p>
-                        <p>Air Quality: {{ }}</p>
-                        <p>Property Management: {{ }}</p>
+                        <p>Overall Building Condition:${bldgCondition}</p>
+                        <p>Water: ${water}</p>
+                        <p>Temperature Regulation: ${tempReg}</p>
+                        <p>Air Quality: ${air}</p>
+                        <p>Property Management: ${management}</p>
                       </div>
 
                       <div class="col s6 m6">
-                        <p>Pests: {{ }}</p>
-                        <p>Electricity: {{ }}</p>
-                        <p>Hidden Fees: {{ }}</p>
-                        <p>Cell reception: {{ }}</p>
-                        <p>Internet: {{ }}</p>
+                        <p>Pests: ${pests}</p>
+                        <p>Electricity: ${electricity}</p>
+                        <p>Hidden Fees: ${hiddenFees}</p>
+                        <p>Cell reception: ${cell}</p>
+                        <p>Internet: ${internet}</p>
                       </div>
                     </div>
                   </div>
@@ -306,33 +348,41 @@ $(document).ready(function() {
                   <div class="col s4 m4 additional-overview">
                     <div class="row">
                         <div class="col s8 m8 user-info">
-                          <p>Name: {{ }}</p>
-                          <p>Unit: {{ }}</p>
-                          <p>Lease Duration: {{ }}</p>
+                          <p>Name: ${name}</p>
+                          <p>Unit: ${unit}</p>
+                          <p>Lease Duration: ${leaseDur}</p>
                         </div>
                         <div class="col s4 m4 user-date">
-                          <p>Date Reviewed: {{ }}</p>
+                          <p>Date Reviewed: ${date}</p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col s8 m8 user-comments">
-                        {{Additional Comments}}
+                        ${comments}
                         </div>
                     </div>
                   </div>
 
                 </div>
-              </div>
-            `);
+              </div></div>
+          </div>
+          `;
 
+          infoWindow.setContent(html);
+          infoWindow.open(map, marker);
         });
       })(marker, apartments);
 
+
+      var formattedAddress = apartments[o].address.formattedAddress;
+
+      
       // Create an If that determines if address has reviews
       // Populate btns accordingly
 
       // Loop through reviews within apartments loop
+
     }
 
     $('#search').keypress(function(event){
