@@ -1,5 +1,3 @@
-$(document).ready(function(){
-
   $('#modal1').modal();
 
   // Initialize Firebase
@@ -25,28 +23,12 @@ $(document).ready(function(){
   // };
 
   firebase.initializeApp(config);
-
   // Create a variable to reference the database.
   var database = firebase.database();
-  var apartments = firebase.database().ref('apartments');
 
-  var btn = '<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Review</a>'
-  // Test Firebase
-  var json = [
-  {
-    "title": "Test1",
-    "lat": 41.900362,
-    "lng": -87.623578,
-    "description": btn
-  },
-  {
-    "title": "Test 2",
-    "lat": 41.897838,
-    "lng": -87.620665,
-    "description": btn
-  },
-
-  ]
+  var btn = '<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Review</a>';
+  var viewBtn = '<a href="#" id="test-button" data-activates="slide-out" class="button-collapse">View</a>'
+  
 
   // Initial Values
   var loc = [];
@@ -81,7 +63,6 @@ $(document).ready(function(){
 
   function geocodeAddress(geocoder, resultsMap) {
 
-    var address = document.getElementById('search').value;
     var address = $("#search").val();
 
     geocoder.geocode({'address': address}, function(results, status) {
@@ -104,7 +85,7 @@ $(document).ready(function(){
           map: resultsMap,
           position: results[0].geometry.location
         });
-        infowindow.setContent(btn);
+        infowindow.setContent(`${results[0].formatted_address} <br> ${btn}`);
         infowindow.open(map, marker);
 
       } else {
@@ -186,7 +167,6 @@ $(document).ready(function(){
       };
 
     // Code for "Setting values in the database"
-    // database.ref('/data.name').push(apartments);
     firebase.database().ref("apartments/" + [coords] + "/address").set(address);
     firebase.database().ref("apartments/" + [coords] + "/reviews").push(review);
     // firebase.database().ref("apartments/" + [coords] + "/summary").set(summary);
@@ -199,6 +179,9 @@ $(document).ready(function(){
     comments = $("#comments").val("");
   });
 
+
+  // Function to convert firebase snapshot into array to easily
+  // loop through to extract info to populate markers
   function childSnapshotToArray(snapshot) {
     var returnArr = [];
 
@@ -211,10 +194,10 @@ $(document).ready(function(){
 
     return returnArr;
   };
-  database.ref().on("child_added", function(childSnapshot) {
-    console.log(childSnapshotToArray(childSnapshot));
-    var childApt = childSnapshotToArray(childSnapshot);
 
+  database.ref().on("child_added", function(childSnapshot) {
+
+    var childApt = childSnapshotToArray(childSnapshot);
 
     // Creating a new map
     var map = new google.maps.Map(document.getElementById("map"), {
@@ -230,24 +213,33 @@ $(document).ready(function(){
 
     // Looping through the Firebase data
     for (var i = 0, length = childApt.length; i < length; i++) {
-      debugger;
-      var data = childApt[i],
-        latLng = new google.maps.LatLng(data.address.lat, data.address.lng);
+      var data = childApt[i];
+      // Retrieve Lat/Lng Coords
+      var latLng = new google.maps.LatLng(data.address.lat, data.address.lng);
 
       // Creating a marker and putting it on the map
       var marker = new google.maps.Marker({
         position: latLng,
         map: map,
+        icon:  {
+            path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+            scale: 5
+          },
         title: data.address.formattedAddress
       });
 
+      // Closure
       (function(marker, data) {
         google.maps.event.addListener(marker, "click", function(e) {
-          infoWindow.setContent(data.address.formattedAddress);
+          infoWindow.setContent(`<h5>${data.address.formattedAddress}</h5>`);
           infoWindow.open(map, marker);
         });
       })(marker, data);
 
+      // Create an If that determines if address has reviews
+      // Populate btns accordingly
+
+      // Loop through reviews within apartments loop
     }
 
     $('#search').keypress(function(event){
@@ -259,4 +251,20 @@ $(document).ready(function(){
 
   });
 
-});
+  //drawer stuff
+    // Initialize collapse button
+    $(".button-collapse").sideNav();
+    // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+    //$('.collapsible').collapsible();
+    $('.button-collapse').sideNav({
+        menuWidth: 600, // Default is 300
+        edge: 'left', // Choose the horizontal origin
+        closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+        draggable: true, // Choose whether you can drag to open on touch screens,
+        onOpen: function(el) { }, // A function to be called when sideNav is opened
+        onClose: function(el) {  }, // A function to be called when sideNav is closed
+      }
+    );
+    // hide sideNav to begin - toggles show
+    $('.button-collapse').sideNav('hide');
+
