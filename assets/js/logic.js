@@ -214,7 +214,7 @@ $(document).ready(function(){
     comments = $("#comments").val().trim();
 
     var address = {
-      formattedAddress: formattedAddress;
+      formattedAddress: formattedAddress
     } 
 
     // Star Ratings
