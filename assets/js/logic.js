@@ -2,8 +2,6 @@ $(document).ready(function() {
   $('#modal1').modal();
 
   // Initialize Firebase
-
-  // Derek Firebase
   var config = {
     apiKey: "AIzaSyAJCyPmkk2azsrA9HMVCBCRH9g4dO70H9o",
     authDomain: "project-one-maps.firebaseapp.com",
@@ -13,15 +11,6 @@ $(document).ready(function() {
     messagingSenderId: "735214191875"
   };
 
-// Initialize Firebase
-  // var config = {
-  //   apiKey: "AIzaSyCA3PWKYA42bM2Tz7ofOY72jOI2QdtH5gM",
-  //   authDomain: "apartmentyelp.firebaseapp.com",
-  //   databaseURL: "https://apartmentyelp.firebaseio.com",
-  //   projectId: "apartmentyelp",
-  //   storageBucket: "apartmentyelp.appspot.com",
-  //   messagingSenderId: "339519487350"
-  // };
 
   firebase.initializeApp(config);
   // Create a variable to reference the database.
@@ -37,29 +26,6 @@ $(document).ready(function() {
   var lat;
   var lng;
   var formattedAddress;
-
-  // var count = 0;
-  // var newReview = { };
-  // var name = "";
-  // var date = ""; // Date
-  // var unit = "";
-  // var leaseDur = 0;
-  
-
-  // // Star Ratings
-  // var bldgCondition = 0;
-  // var water = 0;
-  // var tempReg = 0; // new
-  // var air = 0;
-  // var management = 0;
-  // var pests = 0;
-  // var electricity = 0;
-  // var hiddenFees = 0;
-  // var cell = 0;
-  // var internet = 0; // new
-
-  // // Comments
-  // var comments = "";
 
 
   function geocodeAddress(geocoder, resultsMap) {
@@ -170,9 +136,6 @@ $(document).ready(function() {
     firebase.database().ref("apartments/" + [coords] + "/address").set(address);
     firebase.database().ref("apartments/" + [coords] + "/reviews").push(review);
 
-    // firebase.database().ref("apartments/" + [coords] + "/summary").set(summary);
-    // firebase.database().ref("apartments/" + [coords] + "/count").set(count);
-
     //clear out the fields after submitting
     name = $("#name").val("");
     unit = $("#unit").val("");
@@ -182,6 +145,14 @@ $(document).ready(function() {
     window.location.reload();
   });
 
+  function search (geocoder, map) {
+    $('#search').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        geocodeAddress(geocoder, map);
+      }    
+    });
+  }
 
   // Function to convert firebase snapshot into array to easily
   // loop through to extract info to populate markers
@@ -197,8 +168,7 @@ $(document).ready(function() {
 
     return returnArr;
   };
-
-    // var childApt = childSnapshotToArray(childSnapshot);
+  // var childApt = childSnapshotToArray(childSnapshot);
 
     database.ref().on("child_added", function(childSnapshot) {
       var apartments = childSnapshot.val();
@@ -252,8 +222,6 @@ $(document).ready(function() {
         },
         title: apartments[o].address.formattedAddress
       });
-
-
 
       // Closure
       (function(marker, apartments) {
@@ -342,14 +310,10 @@ $(document).ready(function() {
 
     }
 
-    $('#search').keypress(function(event){
-      var keycode = (event.keyCode ? event.keyCode : event.which);
-      if(keycode == '13'){
-        geocodeAddress(geocoder, map);
-      }    
-    });
+    search(geocoder, map);
 
   });
+
 
   //drawer stuff
     // Initialize collapse button
